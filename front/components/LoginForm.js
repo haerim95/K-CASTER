@@ -1,7 +1,9 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import PropTypes from 'prop-types';
 import Link from 'next/dist/client/link';
 import { Button, Form, Input } from 'antd';
 import styled from 'styled-components';
+import useInput from './hooks/useInput';
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
@@ -12,17 +14,8 @@ const FormWrapper = styled(Form)`
 `;
 
 const LoginForm = ({ setIsLoggedIn }) => {
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
-
-  // component 에 props 로 넘겨주는 함수는 useCallback을 써줘야 최적화가 된다.
-  const onChangeId = useCallback((e) => {
-    setId(e.target.value);
-  }, []);
-
-  const onChangePassword = useCallback((e) => {
-    setPassword(e.target.value);
-  }, []);
+  const [id, onChangeId] = useInput('');
+  const [password, onChangePassword] = useInput('');
 
   const onSunmitForm = useCallback(() => {
     console.log(id, password);
@@ -59,6 +52,10 @@ const LoginForm = ({ setIsLoggedIn }) => {
       </ButtonWrapper>
     </FormWrapper>
   );
+};
+
+LoginForm.propTypes = {
+  setIsLoggedIn: PropTypes.func.isRequired,
 };
 
 export default LoginForm;
