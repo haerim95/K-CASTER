@@ -39,10 +39,10 @@ const AppLayout = ({ children }) => {
         </Menu.Item>
       </Menu>
       <Row gutter={8}>
-        <Col xs={24} md={6}>
+        <Col xs={24} md={4}>
           {isLoggedIn ? <UserProfile /> : <LoginForm />}
         </Col>
-        <Col xs={24} md={6}>
+        <Col xs={24} md={8}>
           오른쪽 메뉴
         </Col>
         <Col xs={24} md={12}>
