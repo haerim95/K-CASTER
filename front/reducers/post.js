@@ -18,12 +18,50 @@ export const initialState = {
           src: 'https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/4arX/image/7FtIGKdjqBMSiqgmvHVqW9hHC2c.jpg',
         },
       ],
+      Comments: [
+        {
+          User: {
+            nickname: '익명 2',
+          },
+          content: '추워요',
+        },
+        {
+          User: {
+            nickname: '익명 3',
+          },
+          content: '나듀 추워요ㅜㅜ',
+        },
+      ],
     },
   ],
+  imagePaths: [],
+  postAdded: false,
+};
+
+const ADD_POST = 'ADD_POST';
+export const addPost = {
+  type: ADD_POST,
+};
+
+const dummyPost = {
+  id: 2,
+  content: '더미데이터',
+  User: {
+    id: 1,
+    nickname: '익명 1',
+  },
+  Images: [],
+  Comments: [],
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ADD_POST:
+      return {
+        ...state,
+        mainPosts: [dummyPost, ...state.mainPosts],
+        postAdded: true,
+      };
     default:
       return state;
   }
