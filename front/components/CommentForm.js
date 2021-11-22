@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Button, Form, Input } from 'antd';
 import React, { useCallback } from 'react';
-import useInput from './hooks/useInput';
+import useInput from '../hooks/useInput';
 import { useSelector } from 'react-redux';
 
 const CommentForm = ({ post }) => {
