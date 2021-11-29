@@ -6,7 +6,7 @@ export const initialState = {
         id: 1,
         nickname: '익명',
       },
-      content: '첫번째 게시글 #쿠키자',
+      content: '첫번째 게시글 #쿠키자 #고양이',
       Images: [
         {
           src: 'http://newsimg.hankookilbo.com/2019/04/29/201904291390027161_3.jpg',

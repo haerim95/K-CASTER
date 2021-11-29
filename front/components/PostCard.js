@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 
+import PostCardContent from './PostCardContent';
 import PostImages from './PostImages';
 import CommentForm from './CommentForm';
 
@@ -61,7 +62,7 @@ const PostCard = ({ post }) => {
       >
         <Card.Meta
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
-          description={post.content}
+          description={<PostCardContent postData={post.content} />}
           title={post.User.nickname}
         />
       </Card>
