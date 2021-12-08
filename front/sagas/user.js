@@ -1,4 +1,4 @@
-import { all, fork, put, takeLatest } from '@redux-saga/core/effects';
+import { all, fork, put, takeLatest, delay } from 'redux-saga/effects';
 import axios from 'axios';
 
 function loginAPI(data) {
@@ -32,7 +32,6 @@ function* logOut() {
     yield delay(1000);
     yield put({
       type: 'LOG_OUT_SUCCESS',
-      data: result.data,
     });
   } catch (err) {
     yield put({

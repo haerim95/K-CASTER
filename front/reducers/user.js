@@ -24,13 +24,12 @@ export const logoutRequestAction = (data) => {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'LOG_IN_REQUEST':
-      console.log('reducer login 실행');
+      console.log('reducer login 실행;;;');
       return {
         ...state,
         isLoggingIn: true,
       };
     case 'LOG_IN_SUCCESS':
-      console.log('reducer login 실행2');
       return {
         ...state,
         isLoggingIn: false,
