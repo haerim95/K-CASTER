@@ -1,4 +1,5 @@
 {
+  "parser": "babel-eslint", // 바벨을 이용해 최신문법 에러 발생시키지 않게 끔한다.
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module",
@@ -11,7 +12,28 @@
     "node": true,
     "es6": true
   },
-  "extends": ["eslint: recommended", "plugin: react/recommanded"],
+  "extends": [
+    "airbnb" // recommend는 약하기 때문에 airbnb 로 변경해준다.
+  ],
   "plugins": ["import", "react-hooks"],
-  "rules": {}
+  "rules": {
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-console": "off",
+    "no-underscore-dangle": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "object-curly-newline": "off",
+    "linebreak-style": "off",
+    "no-param-reassign": "off",
+    "jsxSingleQuote": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx"]
+      }
+    }
+  }
 }

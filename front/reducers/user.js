@@ -1,7 +1,7 @@
 export const initialState = {
-  loginLoading: false,
-  loginDone: false, // 로그인 시도중, 시도 중이면 로깅창 띄움
-  loginError: null,
+  logInLoading: false,
+  logInDone: false, // 로그인 시도중, 시도 중이면 로깅창 띄움
+  logInError: null,
   logOutLoading: false, // 로그아웃 시도중
   logOutDone: false,
   logOutError: false,
@@ -61,22 +61,22 @@ const reducer = (state = initialState, action) => {
     case LOG_IN_REQUEST:
       return {
         ...state,
-        loginLoading: true,
-        loginError: null,
-        loginDone: false,
+        logInLoading: true,
+        logInError: null,
+        logInDone: false,
       };
     case LOG_IN_SUCCESS:
       return {
         ...state,
-        loginLoading: false,
-        loginDone: true,
+        logInLoading: false,
+        logInDone: true,
         me: dummyUser(action.data),
       };
     case LOG_IN_FAILURE:
       return {
         ...state,
-        loginLoading: false,
-        loginError: action.error,
+        logInLoading: false,
+        logInError: action.error,
       };
     case LOG_OUT_REQUEST:
       return {

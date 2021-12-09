@@ -6,7 +6,7 @@ import {
   HeartOutlined,
   HeartTwoTone,
   MessageOutlined,
-  RetweetOutlined,
+  RetweetOutlined
 } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 
@@ -18,13 +18,13 @@ const PostCard = ({ post }) => {
   const [liked, setLiked] = useState(false);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const ontoggleLike = useCallback(() => {
-    setLiked((prev) => !prev);
+    setLiked(prev => !prev);
   }, []);
   const onToggleComment = useCallback(() => {
-    setCommentFormOpened((prev) => !prev);
+    setCommentFormOpened(prev => !prev);
   }, []);
 
-  const id = useSelector((state) => state.user.me?.id);
+  const id = useSelector(state => state.user.me?.id);
   return (
     <div style={{ marginBottom: 20 }}>
       <Card
@@ -57,7 +57,7 @@ const PostCard = ({ post }) => {
             }
           >
             <EllipsisOutlined />
-          </Popover>,
+          </Popover>
         ]}
       >
         <Card.Meta
@@ -73,7 +73,7 @@ const PostCard = ({ post }) => {
             header={`${post.Comments.length} 개의 댓글`}
             itemLayout='horizontal'
             dataSource={post.Comments}
-            renderItem={(item) => (
+            renderItem={item => (
               <li>
                 <Comment
                   author={item.User.nickname}
@@ -98,8 +98,8 @@ PostCard.proptypes = {
     content: PropTypes.string,
     createdAt: PropTypes.object,
     Comments: PropTypes.arrayOf(PropTypes.object),
-    Images: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
+    Images: PropTypes.arrayOf(PropTypes.object)
+  }).isRequired
 };
 
 export default PostCard;
