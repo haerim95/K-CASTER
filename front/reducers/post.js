@@ -1,43 +1,48 @@
+import shortid from 'shortid';
+
 export const initialState = {
   mainPosts: [
     {
       id: 1,
       User: {
         id: 1,
-        nickname: '익명',
+        nickname: '익명'
       },
       content: '첫번째 게시글 #쿠키자 #고양이',
       Images: [
         {
-          src: 'http://newsimg.hankookilbo.com/2019/04/29/201904291390027161_3.jpg',
+          src: 'http://newsimg.hankookilbo.com/2019/04/29/201904291390027161_3.jpg'
         },
         {
-          src: 'https://t1.daumcdn.net/cfile/tistory/9982424C5F56648032',
+          src: 'https://t1.daumcdn.net/cfile/tistory/9982424C5F56648032'
         },
         {
-          src: 'https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/4arX/image/7FtIGKdjqBMSiqgmvHVqW9hHC2c.jpg',
-        },
+          src: 'https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/4arX/image/7FtIGKdjqBMSiqgmvHVqW9hHC2c.jpg'
+        }
       ],
       Comments: [
         {
           User: {
-            nickname: '익명 2',
+            nickname: '익명 2'
           },
-          content: '추워요',
+          content: '추워요'
         },
         {
           User: {
-            nickname: '익명 3',
+            nickname: '익명 3'
           },
-          content: '나듀 추워요ㅜㅜ',
-        },
-      ],
-    },
+          content: '나듀 추워요ㅜㅜ'
+        }
+      ]
+    }
   ],
   imagePaths: [],
   addPostLoading: false,
   addPostDone: false,
   addPostError: null,
+  addCommentLoading: false,
+  addCommentDone: false,
+  addCommentError: null
 };
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
@@ -48,26 +53,35 @@ export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 
-export const addPost = (data) => ({
+export const addPost = data => ({
   type: ADD_POST_REQUEST,
-  data,
+  data
 });
 
-export const addComment = (data) => ({
+export const addComment = data => ({
   type: ADD_COMMENT_REQUEST,
-  data,
+  data
 });
 
-const dummyPost = {
-  id: 2,
-  content: '더미데이터',
+const dummyPost = data => ({
+  id: shortid.generate(),
+  content: data,
   User: {
     id: 1,
-    nickname: '익명 1',
+    nickname: '익명 1'
   },
   Images: [],
-  Comments: [],
-};
+  Comments: []
+});
+
+const dummyComment = data => ({
+  id: shortid.generate(),
+  content: data,
+  User: {
+    id: 1,
+    nickname: '익명 1'
+  }
+});
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -76,39 +90,48 @@ const reducer = (state = initialState, action) => {
         ...state,
         addPostLoading: true,
         addPostDone: false,
-        addPostError: null,
+        addPostError: null
       };
     case ADD_POST_SUCCESS:
       return {
         ...state,
-        mainPosts: [dummyPost, ...state.mainPosts],
+        mainPosts: [dummyPost(action.data), ...state.mainPosts],
         addPostLoading: false,
-        addPostDone: true,
+        addPostDone: true
       };
     case ADD_POST_FAILURE:
       return {
         ...state,
         addPostLoading: false,
-        addPostError: action.error,
+        addPostError: action.error
       };
     case ADD_COMMENT_REQUEST:
       return {
         ...state,
         addCommentLoading: true,
         addCommentDone: false,
-        addCommentError: null,
+        addCommentError: null
       };
-    case ADD_COMMENT_SUCCESS:
+    case ADD_COMMENT_SUCCESS: {
+      const postIndex = state.mainPosts.findIndex(
+        v => v.id === action.data.postId
+      );
+      const post = state.mainPosts[postIndex];
+      post.Comments = [dummyComment(action.data.content), ...post.Comments];
+      const mainPosts = [...state.mainPosts];
+      mainPosts[postIndex] = post;
       return {
         ...state,
+        mainPosts,
         addCommentLoading: false,
-        addCommentDone: true,
+        addCommentDone: true
       };
+    }
     case ADD_COMMENT_FAILURE:
       return {
         ...state,
         addCommentLoading: false,
-        addCommentError: action.error,
+        addCommentError: action.error
       };
     default:
       return state;
