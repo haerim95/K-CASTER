@@ -40,13 +40,20 @@ export const CHANGE_NICKNAME_REQUEST = 'CHANGE_NICKNAME_REQUEST';
 export const CHANGE_NICKNAME_SUCCESS = 'CHANGE_NICKNAME_SUCCESS';
 export const CHANGE_NICKNAME_FAILURE = 'CHANGE_NICKNAME_FAILURE';
 
+export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
+export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
+
 const dummyUser = data => ({
   ...data,
   nickname: '힐다',
   id: 1,
-  Posts: [],
-  Followings: [],
-  Followers: []
+  Posts: [{ id: 1, nickname: '힐다' }],
+  Followings: [
+    { nickname: '토리' },
+    { nickname: '모리' },
+    { nickname: '다요' }
+  ],
+  Followers: [{ nickname: '토리' }, { nickname: '모리' }, { nickname: '다요' }]
 });
 
 export const loginRequestAction = data => {
@@ -144,6 +151,22 @@ const reducer = (state = initialState, action) => {
         ...state,
         changeNicknameLoading: false,
         changeNicknameError: action.error
+      };
+    case ADD_POST_TO_ME:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          Posts: [{ id: action.data }, ...state.me.Posts]
+        }
+      };
+    case REMOVE_POST_OF_ME:
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          Posts: state.me.Posts.filter(v => v.id !== action.data)
+        }
       };
     default:
       return state;

@@ -11,24 +11,31 @@ export const initialState = {
       content: '첫번째 게시글 #쿠키자 #고양이',
       Images: [
         {
+          id: shortid.generate(),
           src: 'http://newsimg.hankookilbo.com/2019/04/29/201904291390027161_3.jpg'
         },
         {
+          id: shortid.generate(),
           src: 'https://t1.daumcdn.net/cfile/tistory/9982424C5F56648032'
         },
         {
+          id: shortid.generate(),
           src: 'https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/4arX/image/7FtIGKdjqBMSiqgmvHVqW9hHC2c.jpg'
         }
       ],
       Comments: [
         {
+          id: shortid.generate(),
           User: {
+            id: shortid.generate(),
             nickname: '익명 2'
           },
           content: '추워요'
         },
         {
+          id: shortid.generate(),
           User: {
+            id: shortid.generate(),
             nickname: '익명 3'
           },
           content: '나듀 추워요ㅜㅜ'
@@ -53,6 +60,10 @@ export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 
+export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
+export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
+export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
+
 export const addPost = data => ({
   type: ADD_POST_REQUEST,
   data
@@ -64,8 +75,8 @@ export const addComment = data => ({
 });
 
 const dummyPost = data => ({
-  id: shortid.generate(),
-  content: data,
+  id: data.id,
+  content: data.content,
   User: {
     id: 1,
     nickname: '익명 1'
