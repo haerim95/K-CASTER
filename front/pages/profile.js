@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
+import Router from 'next/router';
 import NicknameEditForm from '../components/NicknameEditForm';
 import FollowList from '../components/FollowList';
 import { useSelector } from 'react-redux';
 
 const Profile = () => {
-  const { me } = useSelector((state) => state.user);
+  const { me } = useSelector(state => state.user);
 
+  useEffect(() => {
+    if (!(me && me.id)) {
+      alert('로그인을 해주세요! 🙏');
+      Router.push('/');
+    }
+  }, [me && me.id]);
+  if (!me) {
+    return null;
+  }
   return (
     <>
       <Head>
