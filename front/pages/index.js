@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useInView } from 'react-intersection-observer';
 
 import AppLayout from '../components/AppLayout';
 import PostForm from '../components/PostForm';
@@ -8,8 +9,9 @@ import { LOAD_POSTS_REQUEST } from '../reducers/post';
 
 const Home = () => {
   const dispatch = useDispatch();
+  const [ref, inView] = useInView();
   const { me } = useSelector(state => state.user);
-  const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector(
+  const { mainPosts, hasMorePosts, loadPostsLoading, id } = useSelector(
     state => state.post
   );
 
@@ -20,24 +22,20 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    function onScroll() {
-      if (
-        window.scrollY + document.documentElement.clientHeight >
-        document.documentElement.scrollHeight - 300
-      ) {
-        if (hasMorePosts && !loadPostsLoading) {
-          dispatch({
-            type: LOAD_POSTS_REQUEST
-          });
-        }
-      }
+    if (
+      inView &&
+      hasMorePosts &&
+      !loadPostsLoading &&
+      document.documentElement.clientHeight <
+        document.documentElement.scrollHeight
+    ) {
+      const lastId = mainPosts[mainPosts.length - 1]?.id;
+      dispatch({
+        type: LOAD_POSTS_REQUEST,
+        lastId
+      });
     }
-    window.addEventListener('scroll', onScroll);
-    return () => {
-      // 이벤트 해제, 해제 안해주면 계속 기록에 쌓여있음
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, [hasMorePosts, loadPostsLoading]);
+  }, [inView, hasMorePosts, loadPostsLoading, mainPosts, id]);
 
   return (
     <AppLayout>
@@ -45,6 +43,7 @@ const Home = () => {
       {mainPosts.map(post => (
         <PostCard key={post.id} post={post} />
       ))}
+      <div ref={hasMorePosts && !loadPostsLoading ? ref : undefined} />
     </AppLayout>
   );
 };
