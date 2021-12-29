@@ -1,6 +1,12 @@
 import produce from 'immer';
 
 export const initialState = {
+  unfollowLoading: false,
+  unfollowDone: false, // 언팔로잉 시도중, 시도 중이면 로깅창 띄움
+  unfollowError: null,
+  followLoading: false,
+  followDone: false, // 팔로잉 시도중, 시도 중이면 로깅창 띄움
+  followError: null,
   logInLoading: false,
   logInDone: false, // 로그인 시도중, 시도 중이면 로깅창 띄움
   logInError: null,
@@ -75,6 +81,37 @@ export const logoutRequestAction = data => {
 const reducer = (state = initialState, action) => {
   return produce(state, draft => {
     switch (action.type) {
+      case UNFOLLOW_REQUEST:
+        draft.unfollowLoading = true;
+        draft.unfollowDone = false;
+        draft.unfollowError = null;
+        break;
+      case UNFOLLOW_SUCCESS:
+        draft.unfollowLoading = false;
+        draft.unfollowDone = true;
+        draft.me.Followings = draft.me.Followings.filter(
+          // 언팔로잉 한 사람만 목록에서 뺀다
+          v => v.id !== action.data
+        );
+        break;
+      case UNFOLLOW_FAILURE:
+        draft.unfollowLoading = false;
+        draft.unfollowError = action.error;
+        break;
+      case FOLLOW_REQUEST:
+        draft.followLoading = true;
+        draft.followDone = false;
+        draft.followError = null;
+        break;
+      case FOLLOW_SUCCESS:
+        draft.followLoading = false;
+        draft.followDone = true;
+        draft.me.Followings.push({ id: action.data }); // 그 사람 아이디가 들어온다.
+        break;
+      case FOLLOW_FAILURE:
+        draft.followLoading = false;
+        draft.followError = action.error;
+        break;
       case LOG_IN_REQUEST:
         draft.logInLoading = true;
         draft.logInDone = false;
