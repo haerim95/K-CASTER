@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Button, Card, Popover, List, Comment } from 'antd';
 import {
@@ -35,10 +35,13 @@ const PostCard = ({ post }) => {
     });
   }, []);
 
+  const cardStyle = useMemo(() => ({ marginTop: 10 }), []);
+
   const id = useSelector(state => state.user.me?.id);
   return (
     <div style={{ marginBottom: 20 }}>
       <Card
+        style={cardStyle}
         cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[
           <RetweetOutlined key='retweet' />,

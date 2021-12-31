@@ -9,6 +9,7 @@ import { createGlobalStyle } from 'styled-components';
 
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
+import Weather from './Weather';
 
 const Global = createGlobalStyle`
   .ant-row{
@@ -30,7 +31,7 @@ const SearchInput = styled(Input.Search)`
 `;
 
 const AppLayout = ({ children }) => {
-  const { me } = useSelector((state) => state.user);
+  const { me } = useSelector(state => state.user);
 
   return (
     <div>
@@ -60,7 +61,7 @@ const AppLayout = ({ children }) => {
           {me ? <UserProfile /> : <LoginForm />}
         </Col>
         <Col xs={24} md={8}>
-          오른쪽 메뉴
+          <Weather />
         </Col>
         <Col xs={24} md={12}>
           {children}
@@ -71,7 +72,7 @@ const AppLayout = ({ children }) => {
 };
 
 AppLayout.propTypes = {
-  children: PropTtypes.node.isRequired,
+  children: PropTtypes.node.isRequired
 };
 
 export default AppLayout;
