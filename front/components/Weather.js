@@ -39,6 +39,7 @@ const Weather = () => {
     p {
       margin-left: 15px;
       margin-bottom: 0;
+      padding: 0;
       font-size: 1rem;
       span {
         display: inline-block;
