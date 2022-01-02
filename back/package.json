@@ -1,0 +1,10 @@
+{
+  "name": "anonymous-caster",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Haerim",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
