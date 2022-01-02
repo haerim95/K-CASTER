@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 
 import user from './user';
 import post from './post';
+import weather from './weather';
 
 // (이전상태, 액션) => 다음상태
 const rootReducer = combineReducers({
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   },
   user,
   post,
+  weather
 });
 
 export default rootReducer;
