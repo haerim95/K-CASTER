@@ -1,19 +1,36 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Card } from 'antd';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { CALL_WEATHER_REQUEST } from '../reducers/weather';
 
 const Weather = () => {
+  const dispatch = useDispatch();
+  const { weatherInfo } = useSelector(state => state.weather);
+
+  // 스타일
   const WeatherIcon = styled.div`
     position: relative;
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background: linear-gradient(#00eaff, transparent),
-      linear-gradient(-45deg, #ff2c7b, transparent),
-      linear-gradient(45deg, #fff000, transparent);
+    background: linear-gradient(#e9577f, transparent),
+      linear-gradient(-80deg, #c96edc, transparent),
+      linear-gradient(-45deg, #aa7dec, transparent),
+      linear-gradient(45deg, #57a4eb, transparent);
     background-blend-mode: sreen;
 
     display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+
+    img {
+      width: 60%;
+      height: 60%;
+      position: relative;
+      z-index: 2;
+    }
 
     ::before {
       position: absolute;
@@ -27,7 +44,7 @@ const Weather = () => {
       margin-left: -58px;
       border-radius: 50%;
       background: #ffffff;
-      z-index: 999;
+      z-index: 1;
     }
   `;
 
@@ -51,15 +68,23 @@ const Weather = () => {
 
   const cardStyle = useMemo(() => ({ marginTop: 10 }), []);
 
+  useEffect(() => {
+    dispatch({
+      type: CALL_WEATHER_REQUEST
+    });
+  }, []);
+
   return (
     <div>
       <Card title='오늘의 날씨' style={cardStyle}>
         <WeatherStyle>
-          <WeatherIcon></WeatherIcon>
+          <WeatherIcon>
+            <img src={`/images/${weatherInfo.icon}.png`} role='presentation' />
+          </WeatherIcon>
           <div>
-            <p>따뜻하게 입으세요.</p>
+            <p>{weatherInfo.comment}</p>
             <p>
-              현재 온도 <span>24°C</span>
+              현재 온도 <span>{weatherInfo.temperature}°C</span>
             </p>
           </div>
         </WeatherStyle>

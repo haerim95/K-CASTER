@@ -1,35 +1,41 @@
 import produce from 'immer';
 
 export const initialState = {
-  weatherLoading: false,
-  weatherIcon: null,
-  weatherCallError: null
+  weatherCallLoading: false,
+  weatherCallDone: false,
+  weatherCallError: null,
+  weatherInfo: {}
 };
 
 export const CALL_WEATHER_REQUEST = 'CALL_WEATHER_REQUEST';
 export const CALL_WEATHER_SUCCESS = 'CALL_WEATHER_SUCCESS';
 export const CALL_WEATHER_FAILURE = 'CALL_WEATHER_FAILURE';
 
-const dummyWeather = {
+const dummyWeather = data => ({
+  ...data,
   city: '서울시',
-  weatherCode: 1,
+  temperature: '-5',
   weatherState: '비',
-  whatherIcon: 'rain'
-};
+  icon: 'rain',
+  comment: '눈사람 되겠어요.'
+});
 
 const reducer = (state = initialState, action) => {
   return produce(state, draft => {
     switch (action.type) {
       case CALL_WEATHER_REQUEST:
-        draft.weatherLoading = true;
-        weatherIcon = null;
+        draft.weatherCallLoading = true;
+        draft.weatherCallDone = false;
+        draft.weatherIcon = null;
         break;
       case CALL_WEATHER_SUCCESS:
-        draft.weatherLoading = false;
-        weatherIcon = null;
+        draft.weatherCallLoading = false;
+        draft.weatherCallDone = true;
+        draft.weatherInfo = dummyWeather(action.data);
+        draft.weatherIcon = null;
         break;
       case CALL_WEATHER_FAILURE:
-        draft.weatherLoading = false;
+        draft.weatherCallLoading = false;
         draft.weatherCallError = action.error;
         break;
       default:

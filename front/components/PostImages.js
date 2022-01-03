@@ -64,7 +64,7 @@ const PostImages = ({ images }) => {
             display: 'inline-block',
             width: '50%',
             textAlign: 'center',
-            verticalAlign: 'middle',
+            verticalAlign: 'middle'
           }}
           onClick={onZoom}
         >
@@ -79,7 +79,7 @@ const PostImages = ({ images }) => {
 };
 
 PostImages.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.object),
+  images: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default PostImages;
