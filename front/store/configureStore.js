@@ -6,8 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from '../reducers';
 import rootSaga from '../sagas';
 
-const configureStore = (context) => {
-  console.log(`안나오냐...? ${context}`);
+const configureStore = context => {
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = [sagaMiddleware];
   const enhancer =
@@ -20,7 +19,7 @@ const configureStore = (context) => {
 };
 
 const wrapper = createWrapper(configureStore, {
-  debug: process.env.NODE_ENV === 'development',
+  debug: process.env.NODE_ENV === 'development'
 });
 
 export default wrapper;

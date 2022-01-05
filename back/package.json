@@ -5,6 +5,9 @@
   "author": "Haerim",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.12.5",
+    "sequelize-cli": "^6.3.0"
   }
 }
