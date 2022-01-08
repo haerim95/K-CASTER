@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
       collate: 'utf8mb4_general_ci',
     }
   );
-  Hashtag.associte = (db) => {};
+  Hashtag.associte = (db) => {
+    db.Hashtag.belongsToMany(db.Post);
+  };
   return Hashtag;
 };
