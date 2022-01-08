@@ -8,11 +8,11 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      charset: 'uft8mb4',
+      charset: 'utf8mb4',
       collate: 'utf8mb4_general_ci',
     }
   );
-  Comment.associte = (db) => {
+  Comment.associate = (db) => {
     db.Comment.belongsTo(db.User);
     db.Comment.belongsTo(db.Post);
   };

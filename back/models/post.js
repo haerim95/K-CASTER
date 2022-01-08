@@ -8,16 +8,17 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      charset: 'uft8mb4',
+      charset: 'utf8mb4',
       collate: 'utf8mb4_general_ci',
     }
   );
-  Post.associte = (db) => {
+  Post.associate = (db) => {
     db.Post.belongsTo(db.User);
-    db.Post.belongsToMany(db.Hashtag);
+    db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag' });
     db.Post.hasMany(db.Comment);
     db.Post.hasMany(db.Image);
-    db.Post.belngsToMany(db.User, { throuth: 'Like' });
+    db.Post.belongsToMany(db.User, { through: 'Like', as: 'Likers' });
+    db.Post.belongsTo(db.Post, { as: 'Retweet' });
   };
   return Post;
 };

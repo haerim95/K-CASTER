@@ -8,12 +8,12 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      charset: 'uft8mb4',
+      charset: 'utf8mb4',
       collate: 'utf8mb4_general_ci',
     }
   );
-  Hashtag.associte = (db) => {
-    db.Hashtag.belongsToMany(db.Post);
+  Hashtag.associate = (db) => {
+    db.Hashtag.belongsToMany(db.Post, { through: 'PostHashtag' });
   };
   return Hashtag;
 };

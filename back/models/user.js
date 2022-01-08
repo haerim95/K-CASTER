@@ -17,14 +17,24 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      charset: 'uft8',
+      charset: 'utf8',
       collate: 'utf8_general_ci',
     }
   );
-  User.associte = (db) => {
+  User.associate = (db) => {
     db.User.hasMany(db.Post);
     db.User.hasMany(db.Comment);
-    db.User.belongsToMany(db.Post, { throuth: 'Like' });
+    db.User.belongsToMany(db.Post, { through: 'Like', as: 'Liked' });
+    db.User.belongsToMany(db.User, {
+      through: 'Follow',
+      as: 'Followers',
+      foreingKey: 'FollowingId',
+    });
+    db.User.belongsToMany(db.User, {
+      through: 'Follow',
+      as: 'Followings',
+      foreingKey: 'FollowerId',
+    });
   };
   return User;
 };

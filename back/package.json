@@ -2,6 +2,9 @@
   "name": "anonymous-caster",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app"
+  },
   "author": "Haerim",
   "license": "MIT",
   "dependencies": {
@@ -9,5 +12,8 @@
     "mysql2": "^2.3.3",
     "sequelize": "^6.12.5",
     "sequelize-cli": "^6.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "2"
   }
 }

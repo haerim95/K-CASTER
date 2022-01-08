@@ -8,11 +8,11 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      charset: 'uft8',
+      charset: 'utf8',
       collate: 'utf8_general_ci',
     }
   );
-  Image.associte = (db) => {
+  Image.associate = (db) => {
     db.Image.belongsTo(db.Post);
   };
   return Image;
