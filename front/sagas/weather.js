@@ -7,21 +7,25 @@ import {
 } from '../reducers/weather';
 
 function weatherAPI() {
+  // component 에서 지역선택값 받아오기
+  // const city = action;
+  const weatherKey = '516538335f0fa3dfef1405b56e389227';
   return axios.get(
-    'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst'
+    `https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=${weatherKey}&lang=kr`
   );
 }
 
 function* weather(action) {
-  const API_KEY =
-    'pZtcA%2Ft8arts7hWjT1%2BHRTm6LjOmJqrDRt7Wrs%2FdErP57P5KtskrFYcsWD43gI4FYbkDX5PHazoI%2F0bwkM4Wbg%3D%3D';
+  // const today = datetime.datetime.today();
+
   try {
-    // const result = yield call(weatherAPI);
+    const result = yield call(weatherAPI);
     yield delay(1000);
     yield put({
       type: CALL_WEATHER_SUCCESS,
-      data: action.data
+      data: result.data
     });
+    console.log(result.data);
   } catch (err) {
     yield put({
       type: CALL_WEATHER_FAILURE,

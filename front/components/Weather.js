@@ -79,13 +79,11 @@ const Weather = () => {
       <Card title='오늘의 날씨' style={cardStyle}>
         <WeatherStyle>
           <WeatherIcon>
-            <img src={`/images/${weatherInfo.icon}.png`} role='presentation' />
+            {/* <img src={`/images/${weatherInfo.icon}.png`} role='presentation' /> */}
           </WeatherIcon>
           <div>
-            <p>{weatherInfo.comment}</p>
-            <p>
-              현재 온도 <span>{weatherInfo.temperature}°C</span>
-            </p>
+            {/* <p>{weatherInfo.comment}</p> */}
+            <p>{/* 현재 온도 <span>{weatherInfo.temperature}°C</span> */}</p>
           </div>
         </WeatherStyle>
       </Card>

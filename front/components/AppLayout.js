@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTtypes from 'prop-types';
 import Link from 'next/link';
-import { Menu, Input, Row, Col } from 'antd';
+import { Menu, Input, Row, Col, Select } from 'antd';
 import styled from 'styled-components';
 
 import { useSelector } from 'react-redux';
@@ -33,6 +33,11 @@ const SearchInput = styled(Input.Search)`
 const AppLayout = ({ children }) => {
   const { me } = useSelector(state => state.user);
 
+  const { Option } = Select;
+  function onChangeLocation(value) {
+    console.log(`지역은 ${value}`);
+  }
+
   return (
     <div>
       <Global />
@@ -54,6 +59,20 @@ const AppLayout = ({ children }) => {
           <Link href='/signup'>
             <a>회원가입</a>
           </Link>
+        </Menu.Item>
+        <Menu.Item key='menu5'>
+          <Select
+            defaultValue='서울'
+            style={{ width: 120 }}
+            onChange={onChangeLocation}
+          >
+            <Option value='Seoul'>서울</Option>
+            <Option value='Deajeon'>대전</Option>
+            <Option value='Gangneung'>강릉</Option>
+            <Option value='Gwangju'>광주</Option>
+            <Option value='Busan'>부산</Option>
+            <Option value='Jeju'>제주</Option>
+          </Select>
         </Menu.Item>
       </Menu>
       <Row gutter={8}>
