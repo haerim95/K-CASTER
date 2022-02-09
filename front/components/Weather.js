@@ -74,16 +74,22 @@ const Weather = () => {
     });
   }, []);
 
+  const iconUrl =
+    'http://openweathermap.org/img/w/' + weatherInfo.weather + '.png';
+
   return (
     <div>
       <Card title='오늘의 날씨' style={cardStyle}>
         <WeatherStyle>
           <WeatherIcon>
+            <img src={iconUrl} />
             {/* <img src={`/images/${weatherInfo.icon}.png`} role='presentation' /> */}
           </WeatherIcon>
           <div>
-            {/* <p>{weatherInfo.comment}</p> */}
-            <p>{/* 현재 온도 <span>{weatherInfo.temperature}°C</span> */}</p>
+            <p>{weatherInfo.name}</p>
+            <p>
+              현재 온도 <span>{weatherInfo.main.temp}°C</span>
+            </p>
           </div>
         </WeatherStyle>
       </Card>

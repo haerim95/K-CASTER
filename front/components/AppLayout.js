@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTtypes from 'prop-types';
 import Link from 'next/link';
 import { Menu, Input, Row, Col, Select } from 'antd';
 import styled from 'styled-components';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
 
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
 import Weather from './Weather';
+import { callWeatherRequestAction } from '../reducers/weather';
 
 const Global = createGlobalStyle`
   .ant-row{
@@ -31,12 +32,20 @@ const SearchInput = styled(Input.Search)`
 `;
 
 const AppLayout = ({ children }) => {
-  const { me } = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
+  const { me } = useSelector(state => state.user);
   const { Option } = Select;
-  function onChangeLocation(value) {
-    console.log(`지역은 ${value}`);
-  }
+
+  const [location, setLocation] = useState('');
+  const onChangeLocation = useCallback(
+    value => {
+      setLocation(value);
+      dispatch(callWeatherRequestAction({ location }));
+      console.log(location);
+    },
+    [location]
+  );
 
   return (
     <div>
@@ -62,7 +71,7 @@ const AppLayout = ({ children }) => {
         </Menu.Item>
         <Menu.Item key='menu5'>
           <Select
-            defaultValue='서울'
+            defaultValue={location}
             style={{ width: 120 }}
             onChange={onChangeLocation}
           >

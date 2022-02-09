@@ -11,13 +11,20 @@ export const CALL_WEATHER_REQUEST = 'CALL_WEATHER_REQUEST';
 export const CALL_WEATHER_SUCCESS = 'CALL_WEATHER_SUCCESS';
 export const CALL_WEATHER_FAILURE = 'CALL_WEATHER_FAILURE';
 
+export const callWeatherRequestAction = data => {
+  return {
+    type: CALL_WEATHER_REQUEST,
+    data
+  };
+};
+
 const dummyWeather = data => ({
-  ...data,
-  city: '서울시',
-  temperature: '-5',
-  weatherState: '비',
-  icon: 'rain',
-  comment: '눈사람 되겠어요.'
+  ...data
+  // city: data.location,
+  // temperature: '-5',
+  // weatherState: '비',
+  // icon: 'rain',
+  // comment: '눈사람 되겠어요.'
 });
 
 const reducer = (state = initialState, action) => {
