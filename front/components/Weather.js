@@ -1,12 +1,14 @@
 import React, { useEffect, useMemo } from 'react';
-import { Card } from 'antd';
+import { Card, Spin, Space } from 'antd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { CALL_WEATHER_REQUEST } from '../reducers/weather';
 
 const Weather = () => {
   const dispatch = useDispatch();
-  const { weatherInfo } = useSelector(state => state.weather);
+  const { weatherInfo, location, weatherCallLoading } = useSelector(
+    state => state.weather
+  );
 
   // 스타일
   const WeatherIcon = styled.div`
@@ -73,24 +75,33 @@ const Weather = () => {
       type: CALL_WEATHER_REQUEST
     });
   }, []);
-
-  const iconUrl =
-    'http://openweathermap.org/img/w/' + weatherInfo.weather + '.png';
+  console.log(`나야....${weatherInfo.name}`);
 
   return (
     <div>
       <Card title='오늘의 날씨' style={cardStyle}>
         <WeatherStyle>
-          <WeatherIcon>
-            <img src={iconUrl} />
-            {/* <img src={`/images/${weatherInfo.icon}.png`} role='presentation' /> */}
-          </WeatherIcon>
-          <div>
-            <p>{weatherInfo.name}</p>
-            <p>
-              현재 온도 <span>{weatherInfo.main.temp}°C</span>
-            </p>
-          </div>
+          {weatherCallLoading === false ? (
+            <div>
+              <WeatherIcon>
+                {/* <img
+                  src={`/images/${weatherInfo.weather[0].main}.png`}
+                  role='presentation'
+                /> */}
+              </WeatherIcon>
+              <div>
+                <p>
+                  <span>{weatherInfo.name}</span>
+                  {/* {weatherInfo.weather[0].description} */}
+                </p>
+                <p>{/* 현재 온도 <span>{weatherInfo.main.temp}°C</span> */}</p>
+              </div>
+            </div>
+          ) : (
+            <Space size='middle'>
+              <Spin size='large' />
+            </Space>
+          )}
         </WeatherStyle>
       </Card>
     </div>

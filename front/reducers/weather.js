@@ -4,7 +4,8 @@ export const initialState = {
   weatherCallLoading: false,
   weatherCallDone: false,
   weatherCallError: null,
-  weatherInfo: {}
+  weatherInfo: [],
+  location: {}
 };
 
 export const CALL_WEATHER_REQUEST = 'CALL_WEATHER_REQUEST';
