@@ -75,7 +75,6 @@ const Weather = () => {
       type: CALL_WEATHER_REQUEST
     });
   }, []);
-  console.log(`나야....${weatherInfo.name}`);
 
   return (
     <div>
@@ -83,19 +82,26 @@ const Weather = () => {
         <WeatherStyle>
           {weatherCallLoading === false ? (
             <div>
-              <WeatherIcon>
-                {/* <img
-                  src={`/images/${weatherInfo.weather[0].main}.png`}
-                  role='presentation'
-                /> */}
-              </WeatherIcon>
-              <div>
-                <p>
-                  <span>{weatherInfo.name}</span>
-                  {/* {weatherInfo.weather[0].description} */}
-                </p>
-                <p>{/* 현재 온도 <span>{weatherInfo.main.temp}°C</span> */}</p>
-              </div>
+              {weatherInfo.main === undefined &&
+              weatherInfo.weather === undefined ? null : (
+                <div>
+                  <WeatherIcon>
+                    <img
+                      src={`/images/${weatherInfo.weather[0].main}.png`}
+                      role='presentation'
+                    />
+                  </WeatherIcon>
+                  <div>
+                    <p>
+                      <span>{weatherInfo.name}</span>
+                      {weatherInfo.weather[0].description}
+                    </p>
+                    <p>
+                      현재 온도 <span>{weatherInfo.main.temp}°C</span>
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <Space size='middle'>
