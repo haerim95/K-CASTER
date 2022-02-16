@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Card, Spin, Space } from 'antd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -97,7 +97,8 @@ const Weather = () => {
                       {weatherInfo.weather[0].description}
                     </p>
                     <p>
-                      현재 온도 <span>{weatherInfo.main.temp}°C</span>
+                      현재 온도
+                      <span>{Math.floor(weatherInfo.main.temp)} °C</span>
                     </p>
                   </div>
                 </div>

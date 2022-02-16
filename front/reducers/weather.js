@@ -19,15 +19,6 @@ export const callWeatherRequestAction = data => {
   };
 };
 
-const dummyWeather = data => ({
-  ...data
-  // city: data.location,
-  // temperature: '-5',
-  // weatherState: '비',
-  // icon: 'rain',
-  // comment: '눈사람 되겠어요.'
-});
-
 const reducer = (state = initialState, action) => {
   return produce(state, draft => {
     switch (action.type) {
@@ -39,7 +30,7 @@ const reducer = (state = initialState, action) => {
       case CALL_WEATHER_SUCCESS:
         draft.weatherCallLoading = false;
         draft.weatherCallDone = true;
-        draft.weatherInfo = dummyWeather(action.data);
+        draft.weatherInfo = action.data;
         draft.weatherIcon = null;
         break;
       case CALL_WEATHER_FAILURE:

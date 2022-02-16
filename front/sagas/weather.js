@@ -13,10 +13,11 @@ import {
   CALL_WEATHER_SUCCESS
 } from '../reducers/weather';
 
-function weatherAPI() {
+function weatherAPI(location) {
   // component 에서 지역선택값 받아오기
-  // const city = action;
+  const city = location;
   const weatherKey = 'c43ed2d696718707f3f45cef18397c78';
+  console.log(`내 지역은 ${city}`);
   return axios.get(
     `https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=${weatherKey}&lang=kr&units=metric`
   );

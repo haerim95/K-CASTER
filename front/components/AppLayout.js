@@ -71,6 +71,7 @@ const AppLayout = ({ children }) => {
         </Menu.Item>
         <Menu.Item key='menu5'>
           <Select
+            key={location}
             defaultValue={location}
             style={{ width: 120 }}
             onChange={onChangeLocation}
