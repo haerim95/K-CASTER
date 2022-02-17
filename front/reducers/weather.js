@@ -5,7 +5,7 @@ export const initialState = {
   weatherCallDone: false,
   weatherCallError: null,
   weatherInfo: [],
-  location: {}
+  location: ''
 };
 
 export const CALL_WEATHER_REQUEST = 'CALL_WEATHER_REQUEST';
@@ -25,13 +25,12 @@ const reducer = (state = initialState, action) => {
       case CALL_WEATHER_REQUEST:
         draft.weatherCallLoading = true;
         draft.weatherCallDone = false;
-        draft.weatherIcon = null;
         break;
       case CALL_WEATHER_SUCCESS:
         draft.weatherCallLoading = false;
         draft.weatherCallDone = true;
         draft.weatherInfo = action.data;
-        draft.weatherIcon = null;
+        draft.location = action.location;
         break;
       case CALL_WEATHER_FAILURE:
         draft.weatherCallLoading = false;

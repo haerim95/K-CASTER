@@ -72,7 +72,8 @@ const Weather = () => {
 
   useEffect(() => {
     dispatch({
-      type: CALL_WEATHER_REQUEST
+      type: CALL_WEATHER_REQUEST,
+      location
     });
   }, []);
 

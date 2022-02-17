@@ -27,7 +27,7 @@ function* weather(action) {
   // const today = datetime.datetime.today();
 
   try {
-    const result = yield call(weatherAPI);
+    const result = yield call(weatherAPI, action.location);
     yield put({
       type: CALL_WEATHER_SUCCESS,
       data: result.data

@@ -41,7 +41,7 @@ const AppLayout = ({ children }) => {
   const onChangeLocation = useCallback(
     value => {
       setLocation(value);
-      dispatch(callWeatherRequestAction({ location }));
+      dispatch(callWeatherRequestAction(location));
       console.log(location);
     },
     [location]
