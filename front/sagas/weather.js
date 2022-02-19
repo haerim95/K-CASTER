@@ -14,21 +14,14 @@ import {
 } from '../reducers/weather';
 
 function weatherAPI(location) {
-  // component 에서 지역선택값 받아오기
   const city = location;
   const weatherKey = 'c43ed2d696718707f3f45cef18397c78';
-  console.log(`내 지역은 ${city}`);
   return axios.get(
-    `https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=${weatherKey}&lang=kr&units=metric`
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherKey}&lang=kr&units=metric`
   );
-  // return axios.get(
-  //   `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherKey}&lang=kr&units=metric`
-  // );
 }
 
 function* weather(action) {
-  // const today = datetime.datetime.today();
-
   try {
     const result = yield call(weatherAPI, action.location);
     yield put({

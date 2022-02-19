@@ -10,10 +10,7 @@ import { createGlobalStyle } from 'styled-components';
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
 import Weather from './Weather';
-import {
-  callWeatherRequestAction,
-  CALL_WEATHER_REQUEST
-} from '../reducers/weather';
+import { CALL_WEATHER_REQUEST } from '../reducers/weather';
 
 const Global = createGlobalStyle`
   .ant-row{
@@ -41,6 +38,11 @@ const AppLayout = ({ children }) => {
   const { Option } = Select;
 
   const [location, setLocation] = useState('');
+
+  useEffect(() => {
+    setLocation('Seoul');
+  }, []);
+
   const onChangeLocation = useCallback(
     value => {
       setLocation(value);
@@ -48,7 +50,6 @@ const AppLayout = ({ children }) => {
         type: CALL_WEATHER_REQUEST,
         location
       });
-      console.log(location);
     },
     [location]
   );
@@ -76,14 +77,15 @@ const AppLayout = ({ children }) => {
           </Link>
         </Menu.Item>
         <Menu.Item key='menu5'>
+          <span>지역</span>
           <Select
             key={location}
-            // defaultValue='서울'
+            defaultValue={location}
             style={{ width: 120 }}
             onChange={onChangeLocation}
           >
             <Option value='Seoul'>서울</Option>
-            <Option value='Deajeon'>대전</Option>
+            <Option value='Daejeon'>대전</Option>
             <Option value='Gangneung'>강릉</Option>
             <Option value='Gwangju'>광주</Option>
             <Option value='Busan'>부산</Option>

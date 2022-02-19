@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { Card, Spin, Space } from 'antd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
@@ -72,9 +73,10 @@ const Weather = ({ location }) => {
 
   useEffect(() => {
     dispatch({
-      type: CALL_WEATHER_REQUEST
+      type: CALL_WEATHER_REQUEST,
+      location
     });
-  }, []);
+  }, [location]);
 
   return (
     <div>
@@ -93,7 +95,7 @@ const Weather = ({ location }) => {
                   </WeatherIcon>
                   <div>
                     <p>
-                      <span>{weatherInfo.name}</span> <span>dd{location}</span>
+                      <span>{weatherInfo.name}</span>
                       {weatherInfo.weather[0].description}
                     </p>
                     <p>
@@ -117,6 +119,10 @@ const Weather = ({ location }) => {
 
 Weather.defaultProps = {
   location: 'Seoul'
+};
+
+Weather.propTypes = {
+  location: PropTypes.string.isRequired
 };
 
 export default Weather;
