@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { CALL_WEATHER_REQUEST } from '../reducers/weather';
 
-const Weather = () => {
+const Weather = ({ location }) => {
   const dispatch = useDispatch();
-  const { weatherInfo, location, weatherCallLoading } = useSelector(
+  const { weatherInfo, weatherCallLoading } = useSelector(
     state => state.weather
   );
 
@@ -72,8 +72,7 @@ const Weather = () => {
 
   useEffect(() => {
     dispatch({
-      type: CALL_WEATHER_REQUEST,
-      location
+      type: CALL_WEATHER_REQUEST
     });
   }, []);
 
@@ -94,7 +93,7 @@ const Weather = () => {
                   </WeatherIcon>
                   <div>
                     <p>
-                      <span>{weatherInfo.name}</span>
+                      <span>{weatherInfo.name}</span> <span>dd{location}</span>
                       {weatherInfo.weather[0].description}
                     </p>
                     <p>
@@ -114,6 +113,10 @@ const Weather = () => {
       </Card>
     </div>
   );
+};
+
+Weather.defaultProps = {
+  location: 'Seoul'
 };
 
 export default Weather;

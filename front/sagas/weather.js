@@ -21,6 +21,9 @@ function weatherAPI(location) {
   return axios.get(
     `https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=${weatherKey}&lang=kr&units=metric`
   );
+  // return axios.get(
+  //   `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherKey}&lang=kr&units=metric`
+  // );
 }
 
 function* weather(action) {
@@ -32,7 +35,7 @@ function* weather(action) {
       type: CALL_WEATHER_SUCCESS,
       data: result.data
     });
-    console.log(result.data);
+    console.log(`아놔ㅏaㅏ${action.location}`);
   } catch (err) {
     yield put({
       type: CALL_WEATHER_FAILURE,

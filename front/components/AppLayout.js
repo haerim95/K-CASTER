@@ -10,7 +10,10 @@ import { createGlobalStyle } from 'styled-components';
 import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
 import Weather from './Weather';
-import { callWeatherRequestAction } from '../reducers/weather';
+import {
+  callWeatherRequestAction,
+  CALL_WEATHER_REQUEST
+} from '../reducers/weather';
 
 const Global = createGlobalStyle`
   .ant-row{
@@ -41,7 +44,10 @@ const AppLayout = ({ children }) => {
   const onChangeLocation = useCallback(
     value => {
       setLocation(value);
-      dispatch(callWeatherRequestAction(location));
+      dispatch({
+        type: CALL_WEATHER_REQUEST,
+        location
+      });
       console.log(location);
     },
     [location]
@@ -72,7 +78,7 @@ const AppLayout = ({ children }) => {
         <Menu.Item key='menu5'>
           <Select
             key={location}
-            defaultValue={location}
+            // defaultValue='서울'
             style={{ width: 120 }}
             onChange={onChangeLocation}
           >
@@ -90,7 +96,7 @@ const AppLayout = ({ children }) => {
           {me ? <UserProfile /> : <LoginForm />}
         </Col>
         <Col xs={24} md={8}>
-          <Weather />
+          <Weather location={location} />
         </Col>
         <Col xs={24} md={12}>
           {children}
