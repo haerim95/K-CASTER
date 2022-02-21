@@ -5,7 +5,7 @@ import useInput from '../hooks/useInput';
 import { addPost } from '../reducers/post';
 
 const PostForm = () => {
-  const { imagePaths, addPostDone } = useSelector((state) => state.post);
+  const { imagePaths, addPostDone } = useSelector(state => state.post);
   const dispatch = useDispatch();
   const imageInput = useRef();
   const [text, onChangeText, setText] = useInput('');
@@ -34,7 +34,7 @@ const PostForm = () => {
         value={text}
         onChange={onChangeText}
         maxLength={140}
-        placeholder='오늘의 체감날씨는 어떤가요?'
+        placeholder='오늘의 날씨는 어떤가요?'
       />
       <div>
         <input type='file' multiple hidden ref={imageInput} />
@@ -44,7 +44,7 @@ const PostForm = () => {
         </Button>
       </div>
       <div>
-        {imagePaths.map((v) => {
+        {imagePaths.map(v => {
           <div key={v} style={{ display: 'inline-block' }}>
             <img src={v} style={{ width: '200px' }} alt={v} />
             <div>

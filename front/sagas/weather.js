@@ -16,9 +16,15 @@ import {
 function weatherAPI(location) {
   const city = location;
   const weatherKey = 'c43ed2d696718707f3f45cef18397c78';
-  return axios.get(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherKey}&lang=kr&units=metric`
-  );
+  if (city === '') {
+    return axios.get(
+      `https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=${weatherKey}&lang=kr&units=metric`
+    );
+  } else {
+    return axios.get(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherKey}&lang=kr&units=metric`
+    );
+  }
 }
 
 function* weather(action) {
@@ -28,7 +34,6 @@ function* weather(action) {
       type: CALL_WEATHER_SUCCESS,
       data: result.data
     });
-    console.log(`아놔ㅏaㅏ${action.location}`);
   } catch (err) {
     yield put({
       type: CALL_WEATHER_FAILURE,

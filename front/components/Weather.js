@@ -56,15 +56,36 @@ const Weather = ({ location }) => {
     justify-content: center;
     align-items: center;
 
-    p {
-      margin-left: 15px;
-      margin-bottom: 0;
-      padding: 0;
-      font-size: 1rem;
-      span {
-        display: inline-block;
-        margin-left: 5px;
-        font-size: 1.4rem;
+    .iconWrap {
+      display: flex;
+      align-items: center;
+      p {
+        margin-left: 15px;
+        margin-bottom: 0;
+        padding: 0;
+        font-size: 1rem;
+        span {
+          display: inline-block;
+          font-size: 1.4rem;
+        }
+      }
+    }
+
+    .txtInfo {
+      margin-top: 10px;
+      text-align: center;
+
+      p {
+        font-size: 1.2rem;
+        margin: 0;
+        &:first-child {
+          font-size: 1rem;
+          color: #9e9e9e;
+        }
+        span {
+          display: inline-block;
+          margin-left: 5px;
+        }
       }
     }
   `;
@@ -87,17 +108,20 @@ const Weather = ({ location }) => {
               {weatherInfo.main === undefined &&
               weatherInfo.weather === undefined ? null : (
                 <div>
-                  <WeatherIcon>
-                    <img
-                      src={`/images/${weatherInfo.weather[0].main}.png`}
-                      role='presentation'
-                    />
-                  </WeatherIcon>
-                  <div>
+                  <div className='iconWrap'>
+                    <WeatherIcon>
+                      <img
+                        src={`/images/${weatherInfo.weather[0].main}.png`}
+                        role='presentation'
+                      />
+                    </WeatherIcon>
                     <p>
                       <span>{weatherInfo.name}</span>
-                      {weatherInfo.weather[0].description}
                     </p>
+                  </div>
+                  <div className='txtInfo'>
+                    <p>{weatherInfo.weather[0].description}</p>
+
                     <p>
                       현재 온도
                       <span>{Math.floor(weatherInfo.main.temp)} °C</span>
