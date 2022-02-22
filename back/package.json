@@ -8,6 +8,7 @@
   "author": "Haerim",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.17.2",
     "mysql2": "^2.3.3",
     "sequelize": "^6.12.5",

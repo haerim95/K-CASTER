@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      location: {
+        type: DataTypes.INTEGER,
+      },
     },
     {
       charset: 'utf8mb4',
