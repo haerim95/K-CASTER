@@ -36,13 +36,10 @@ const Signup = () => {
   // 이용약관
   const [term, setTerm] = useState('');
   const [termError, setTermError] = useState(false);
-  const onChangeTerm = useCallback(
-    e => {
-      setTerm(e.target.checked);
-      setTermError(false);
-    },
-    [term, termError]
-  );
+  const onChangeTerm = useCallback(e => {
+    setTerm(e.target.checked);
+    setTermError(false);
+  }, []);
 
   // 버튼 스타일 객체 리렌더링 방지
   const style = useMemo(() => ({ marginTop: 10 }), []);
