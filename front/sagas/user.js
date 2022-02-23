@@ -20,16 +20,15 @@ import {
 } from '../reducers/user';
 
 function loginAPI(data) {
-  return axios.post('/api/login', data);
+  return axios.post('/user/login', data);
 }
 
 function* login(action) {
   try {
-    yield delay(1000);
-    // const result = yield call(loginAPI, action.data);
+    const result = yield call(loginAPI, action.data);
     yield put({
       type: LOG_IN_SUCCESS,
-      data: action.data
+      data: result.data
     });
   } catch (err) {
     yield put({
@@ -59,7 +58,7 @@ function* logOut() {
 }
 
 function signUpAPI(data) {
-  return axios.post('http://localhost:3065/user', data);
+  return axios.post('/user', data);
 }
 
 function* signUp(action) {
