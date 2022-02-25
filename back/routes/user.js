@@ -15,10 +15,10 @@ router.post('/login', (req, res, next) => {
     }
     return req.login(user, async (loginErr) => {
       if (loginErr) {
-        console.error(loginErr);
+        console.error(`아무래도...${loginErr}`);
         return next(loginErr);
       }
-      return res.json(user);
+      return res.status(200).json(user);
     });
   })(req, res, next);
 });
