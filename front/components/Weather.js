@@ -124,7 +124,9 @@ const Weather = ({ location }) => {
 
                     <p>
                       현재 온도
-                      <span>{Math.floor(weatherInfo.main.temp)} °C</span>
+                      <span>
+                        {Math.floor(weatherInfo.main.temp).toFixed(0)} °C
+                      </span>
                     </p>
                   </div>
                 </div>
