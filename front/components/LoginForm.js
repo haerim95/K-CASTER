@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/dist/client/link';
 import { Button, Form, Input } from 'antd';
@@ -18,9 +18,15 @@ const FormWrapper = styled(Form)`
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { loginLoading } = useSelector((state) => state.user);
+  const { logInLoading, logInError } = useSelector(state => state.user);
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
+
+  useEffect(() => {
+    if (logInError) {
+      alert(logInError);
+    }
+  }, [logInError]);
 
   const onSunmitForm = useCallback(() => {
     console.log(email, password);
@@ -52,7 +58,7 @@ const LoginForm = () => {
         />
       </div>
       <ButtonWrapper>
-        <Button type='primary' htmlType='submit' loading={loginLoading}>
+        <Button type='primary' htmlType='submit' loading={logInLoading}>
           로그인
         </Button>
         <Link href='/signup'>
