@@ -6,7 +6,45 @@ const router = express.Router();
 
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
+router.get('/', async (req, res, next) => {
+  // login 유지
+  try {
+    if (req.user) {
+      const fullUserWithoutPassword = await User.findOne({
+        where: { id: req.user.id },
+        attributes: {
+          exclude: ['password'],
+        },
+        include: [
+          {
+            model: Post,
+            attributes: ['id'],
+          },
+          {
+            model: User,
+            as: 'Followings',
+            attributes: ['id'],
+          },
+          {
+            model: User,
+            as: 'Followers',
+            attributes: ['id'],
+          },
+        ],
+      });
+
+      res.status(200).json(fullUserWithoutPassword);
+    } else {
+      res.status(200).json(null);
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 router.post('/login', isNotLoggedIn, (req, res, next) => {
+  // 로그인
   passport.authenticate('local', (err, user, info) => {
     if (err) {
       console.error(err);
@@ -23,19 +61,22 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
       const fullUserWithoutPassword = await User.findOne({
         where: { id: user.id },
         attributes: {
-          excludes: ['password'],
+          exclude: ['password'],
         },
         include: [
           {
             model: Post,
+            attributes: ['id'],
           },
           {
             model: User,
             as: 'Followings',
+            attributes: ['id'],
           },
           {
             model: User,
             as: 'Followers',
+            attributes: ['id'],
           },
         ],
       });
@@ -45,6 +86,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
 });
 
 router.post('/', isNotLoggedIn, async (req, res, next) => {
+  // 회원가입
   // POST /user/
   try {
     // 중복체크
@@ -73,6 +115,7 @@ router.post('/', isNotLoggedIn, async (req, res, next) => {
 });
 
 router.post('/logout', isLoggedIn, (req, res, next) => {
+  // 로그아웃
   req.logout();
   req.session.destroy();
   res.send('ok');

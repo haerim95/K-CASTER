@@ -18,11 +18,15 @@ function weatherAPI(location) {
   const weatherKey = 'c43ed2d696718707f3f45cef18397c78';
   if (city === '') {
     return axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=${weatherKey}&lang=kr&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=${weatherKey}&lang=kr&units=metric`,
+      { withCredentials: false }
     );
   } else {
     return axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherKey}&lang=kr&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherKey}&lang=kr&units=metric`,
+      {
+        withCredentials: false
+      }
     );
   }
 }

@@ -6,6 +6,7 @@ import userSaga from './user';
 import weatherSaga from './weather';
 
 axios.defaults.baseURL = 'http://localhost:3065';
+axios.defaults.withCredentials = true;
 
 export default function* rootSaga() {
   yield all([fork(postSaga), fork(userSaga), fork(weatherSaga)]);
