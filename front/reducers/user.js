@@ -58,19 +58,6 @@ export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
 export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
 export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 
-const dummyUser = data => ({
-  ...data,
-  nickname: '힐다',
-  id: 1,
-  Posts: [{ id: 1, nickname: '힐다' }],
-  Followings: [
-    { nickname: '토리' },
-    { nickname: '모리' },
-    { nickname: '다요' }
-  ],
-  Followers: [{ nickname: '토리' }, { nickname: '모리' }, { nickname: '다요' }]
-});
-
 export const loginRequestAction = data => {
   return {
     type: 'LOG_IN_REQUEST',
@@ -181,8 +168,8 @@ const reducer = (state = initialState, action) => {
         break;
       case CHANGE_NICKNAME_SUCCESS:
         draft.changeNicknameLoading = false;
+        draft.me.nickname = action.data.nickname;
         draft.changeNicknameDone = true;
-        draft.me = null;
         break;
       case CHANGE_NICKNAME_FAILURE:
         draft.changeNicknameLoading = false;

@@ -9,6 +9,7 @@ const FollowButton = ({ post }) => {
   const { me, followLoading, unfollowLoading } = useSelector(
     state => state.user
   );
+
   // 게시글 작성자 목록중에 내가 팔로잉 하고 있는 사람 찾기
   const isFollowing = me?.Followings.find(v => v.id === post.User.id);
   const onClickButton = useCallback(() => {
@@ -24,7 +25,9 @@ const FollowButton = ({ post }) => {
       });
     }
   }, [isFollowing]);
-
+  if (post.User.id === me.id) {
+    return null;
+  }
   return (
     <Button loading={followLoading || unfollowLoading} onClick={onClickButton}>
       {isFollowing ? '언팔로우' : '팔로우'}
