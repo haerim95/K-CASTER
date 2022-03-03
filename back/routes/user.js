@@ -5,6 +5,7 @@ const { User, Post } = require('../models');
 const router = express.Router();
 
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const user = require('../models/user');
 
 router.get('/', async (req, res, next) => {
   // login 유지
@@ -133,6 +134,39 @@ router.patch('/nickname', isLoggedIn, async (req, res, next) => {
       }
     );
     res.status(200).json({ nickname: req.body.nickname });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 팔로우
+router.patch('/:userId/follow', isLoggedIn, async (req, res, next) => {
+  // /user/1/follow
+  try {
+    await User.findOne({ id: req.params.userId });
+    if (!user) {
+      res.status(403).send('존재하지 않는 회원입니다.');
+    }
+    await user.addFollowers(req.user.id);
+
+    res.status(200).json({ id: req.params.userId });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 언팔로우
+router.delete('/:userId/follow', isLoggedIn, async (req, res, next) => {
+  // /user/1/follow
+  try {
+    await User.findOne({ id: req.params.userId });
+    if (!user) {
+      res.status(403).send('존재하지 않는 회원입니다.');
+    }
+    await user.removeFollowers(req.user.id);
+    res.status(200).json({ nickname: req.params.userId });
   } catch (error) {
     console.error(error);
     next(error);
