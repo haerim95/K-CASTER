@@ -22,6 +22,15 @@ export const initialState = {
   changeNicknameLoading: false, // 닉네임 변경 시도중
   changeNicknameDone: false,
   changeNicknameError: null,
+  loadFollowersLoading: false, // 닉네임 변경 시도중
+  loadFollowersDone: false,
+  loadFollowersError: null,
+  loadFollowingsLoading: false, // 닉네임 변경 시도중
+  loadFollowingsDone: false,
+  loadFollowingsError: null,
+  removeFollowerLoading: false, // 닉네임 변경 시도중
+  removeFollowerDone: false,
+  removeFollowerError: null,
   me: null,
   signUpData: {},
   loginData: {}
@@ -58,6 +67,18 @@ export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
 export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
 export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 
+export const LOAD_FOLLOWERS_REQUEST = 'LOAD_FOLLOWERS_REQUEST';
+export const LOAD_FOLLOWERS_SUCCESS = 'LOAD_FOLLOWERS_SUCCESS';
+export const LOAD_FOLLOWERS_FAILURE = 'LOAD_FOLLOWERS_FAILURE';
+
+export const LOAD_FOLLOWINGS_REQUEST = 'LOAD_FOLLOWINGS_REQUEST';
+export const LOAD_FOLLOWINGS_SUCCESS = 'LOAD_FOLLOWINGS_SUCCESS';
+export const LOAD_FOLLOWINGS_FAILURE = 'LOAD_FOLLOWINGS_FAILURE';
+
+export const REMOVE_FOLLOWER_REQUEST = 'REMOVE_FOLLOWER_REQUEST';
+export const REMOVE_FOLLOWER_SUCCESS = 'REMOVE_FOLLOWER_SUCCESS';
+export const REMOVE_FOLLOWER_FAILURE = 'REMOVE_FOLLOWER_FAILURE';
+
 export const loginRequestAction = data => {
   return {
     type: 'LOG_IN_REQUEST',
@@ -75,6 +96,50 @@ export const logoutRequestAction = data => {
 const reducer = (state = initialState, action) => {
   return produce(state, draft => {
     switch (action.type) {
+      case REMOVE_FOLLOWER_REQUEST:
+        draft.removeFollowerLoading = true;
+        draft.removeFollowerDone = false;
+        draft.removeFollowerError = null;
+        break;
+      case REMOVE_FOLLOWER_SUCCESS:
+        draft.removeFollowerLoading = false;
+        draft.me.Follower = draft.me.Followers.filter(
+          v => v.id !== action.data.UserId
+        );
+        draft.removeFollowersDone = true;
+        break;
+      case REMOVE_FOLLOWER_FAILURE:
+        draft.removeFollowerLoading = false;
+        draft.removeFollowerError = action.error;
+        break;
+      case LOAD_FOLLOWINGS_REQUEST:
+        draft.loadFollowingsLoading = true;
+        draft.loadFollowingsDone = false;
+        draft.loadFollowingsError = null;
+        break;
+      case LOAD_FOLLOWINGS_SUCCESS:
+        draft.loadFollowingsLoading = false;
+        draft.me.Followings = action.data;
+        draft.loadFollowingsDone = true;
+        break;
+      case LOAD_FOLLOWINGS_FAILURE:
+        draft.loadFollowingsLoading = false;
+        draft.loadFollowingsError = action.error;
+        break;
+      case LOAD_FOLLOWERS_REQUEST:
+        draft.loadFollowersLoading = true;
+        draft.loadFollowersDone = false;
+        draft.loadFollowersError = null;
+        break;
+      case LOAD_FOLLOWERS_SUCCESS:
+        draft.loadFollowersLoading = false;
+        draft.me.Followers = action.data;
+        draft.loadFollowersDone = true;
+        break;
+      case LOAD_FOLLOWERS_FAILURE:
+        draft.loadFollowersLoading = false;
+        draft.loadFollowersError = action.error;
+        break;
       case LOAD_USER_REQUEST:
         draft.loadUserLoading = true;
         draft.loadUserDone = false;
@@ -99,7 +164,7 @@ const reducer = (state = initialState, action) => {
         draft.unfollowDone = true;
         draft.me.Followings = draft.me.Followings.filter(
           // 언팔로잉 한 사람만 목록에서 뺀다
-          v => v.id !== action.data
+          v => v.id !== action.data.UserId
         );
         break;
       case UNFOLLOW_FAILURE:
@@ -113,8 +178,8 @@ const reducer = (state = initialState, action) => {
         break;
       case FOLLOW_SUCCESS:
         draft.followLoading = false;
+        draft.me.Followings.push({ id: action.data.UserId }); // 그 사람 아이디가 들어온다.
         draft.followDone = true;
-        draft.me.Followings.push({ id: action.data }); // 그 사람 아이디가 들어온다.
         break;
       case FOLLOW_FAILURE:
         draft.followLoading = false;
@@ -131,6 +196,7 @@ const reducer = (state = initialState, action) => {
         draft.me = action.data;
         break;
       case LOG_IN_FAILURE:
+        console.log(error);
         draft.logInLoading = false;
         draft.logInError = action.error;
         break;
