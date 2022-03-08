@@ -103,7 +103,7 @@ const reducer = (state = initialState, action) => {
         break;
       case REMOVE_FOLLOWER_SUCCESS:
         draft.removeFollowerLoading = false;
-        draft.me.Follower = draft.me.Followers.filter(
+        draft.me.Followers = draft.me.Followers.filter(
           v => v.id !== action.data.UserId
         );
         draft.removeFollowersDone = true;
