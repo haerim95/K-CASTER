@@ -34,7 +34,7 @@ const PostForm = () => {
       type: UPLOAD_IMAGES_REQUEST,
       data: imageFormData
     });
-  });
+  }, []);
 
   return (
     <Form
@@ -65,7 +65,11 @@ const PostForm = () => {
       <div>
         {imagePaths.map(v => {
           <div key={v} style={{ display: 'inline-block' }}>
-            <img src={v} style={{ width: '200px' }} alt={v} />
+            <img
+              src={`http://localhost:3065/${v}`}
+              style={{ width: '200px' }}
+              alt={v}
+            />
             <div>
               <Button>제거</Button>
             </div>
