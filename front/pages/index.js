@@ -30,21 +30,27 @@ const Home = () => {
     });
   }, []);
 
+
   useEffect(() => {
-    if (
-      inView &&
-      hasMorePosts &&
-      !loadPostsLoading &&
-      document.documentElement.clientHeight <
-        document.documentElement.scrollHeight
-    ) {
-      const lastId = mainPosts[mainPosts.length - 1]?.id;
-      dispatch({
-        type: LOAD_POSTS_REQUEST,
-        lastId
-      });
+    function onScroll() {
+      if (
+        window.pageYOffset + document.documentElement.clientHeight >
+        document.documentElement.scrollHeight - 300
+      ) {
+        if (hasMorePosts && !loadPostsLoading) {
+          const lastId = mainPosts[mainPosts.length - 1]?.id;
+          dispatch({
+            type: LOAD_POSTS_REQUEST,
+            lastId
+          });
+        }
+      }
     }
-  }, [inView, hasMorePosts, loadPostsLoading, mainPosts, id]);
+    window.addEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [hasMorePosts, loadPostsLoading, mainPosts]);
 
   return (
     <AppLayout>

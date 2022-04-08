@@ -145,19 +145,22 @@ const reducer = (state = initialState, action) => {
         draft.unlikePostError = action.error;
         break;
       case LOAD_POSTS_REQUEST:
-        if (action.lastId) {
-          draft.loadPostsLoading = true;
-          draft.loadPostsDone = false;
-          draft.loadPostsError = null;
-        } else {
-          draft.mainPosts = [];
-        }
+        // if (action.lastId) {
+        //   draft.loadPostsLoading = true;
+        //   draft.loadPostsDone = false;
+        //   draft.loadPostsError = null;
+        // } else {
+        //   draft.mainPosts = [];
+        // }
+           draft.loadPostsLoading = true;
+           draft.loadPostsDone = false;
+           draft.loadPostsError = null;
         break;
       case LOAD_POSTS_SUCCESS:
         draft.loadPostsLoading = false;
         draft.loadPostsDone = true;
-        draft.mainPosts = action.data.concat(draft.mainPosts);
-        draft.hasMorePosts = draft.mainPosts.length < 50;
+        draft.mainPosts = draft.mainPosts.concat(action.data);
+        draft.hasMorePosts = action.data.length === 10;
         break;
       case LOAD_POSTS_FAILURE:
         draft.loadPostsLoading = false;

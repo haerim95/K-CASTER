@@ -100,7 +100,7 @@ router.post(
 );
 
 router.post('/:postId/retweet', isLoggedIn, async (req, res, next) => {
-  // 댓글 작성
+  // 리트윗
   //Post /post/1/retweet
   try {
     const post = await Post.findOne({
