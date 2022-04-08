@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Button, Card, Popover, List, Comment } from 'antd';
 import {
@@ -17,42 +17,70 @@ import FollowButton from './FollowButton';
 import {
   REMOVE_POST_REQUEST,
   UNLIKE_POST_REQUEST,
-  LIKE_POST_REQUEST
+  LIKE_POST_REQUEST,
+  RETWEET_REQUEST
 } from '../reducers/post';
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
-  const { removePostLoading } = useSelector(state => state.post);
+  const { removePostLoading, retweetError } = useSelector(
+    state => state.post
+  );
   const [commentFormOpened, setCommentFormOpened] = useState(false);
+  const id = useSelector(state => state.user.me?.id);
+
+  // useEffect(() => {
+  //   if (retweetError) {
+  //     alert(retweetError);
+  //   }
+  // }, [retweetError]);
 
   const onLike = useCallback(() => {
-    dispatch({
+    if (!id) {
+      return alert('로그인이 필요합니다.');
+    }
+    return dispatch({
       type: LIKE_POST_REQUEST,
       data: post.id
     });
-  }, []);
+  }, [id]);
 
   const onUnLike = useCallback(() => {
-    dispatch({
+    if (!id) {
+      return alert('로그인이 필요합니다.');
+    }
+    return dispatch({
       type: UNLIKE_POST_REQUEST,
       data: post.id
     });
-  }, []);
+  }, [id]);
 
   const onToggleComment = useCallback(() => {
     setCommentFormOpened(prev => !prev);
   }, []);
 
   const onRemovePost = useCallback(() => {
-    dispatch({
+    if (!id) {
+      return alert('로그인이 필요합니다.');
+    }
+    return dispatch({
       type: REMOVE_POST_REQUEST,
       data: post.id
     });
-  }, []);
+  }, [id]);
+
+  const onRetweet = useCallback(() => {
+    if(!id){
+      return alert('로그인이 필요합니다.');
+    }
+    return dispatch({
+      type: RETWEET_REQUEST,
+      data: post.id,
+    })
+  }, [id])
 
   const cardStyle = useMemo(() => ({ marginTop: 10 }), []);
 
-  const id = useSelector(state => state.user.me?.id);
   const liked = post.Likers.find(v => v.id === id);
   return (
     <div style={{ marginBottom: 20 }}>
@@ -60,7 +88,7 @@ const PostCard = ({ post }) => {
         style={cardStyle}
         cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[
-          <RetweetOutlined key='retweet' />,
+          <RetweetOutlined key='retweet' onClick={onRetweet} />,
           liked ? (
             <HeartTwoTone
               twoToneColor='#eb2f96'
