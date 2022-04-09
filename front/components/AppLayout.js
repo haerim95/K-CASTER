@@ -27,6 +27,14 @@ const Global = createGlobalStyle`
   }
 `;
 
+const Wrapper = styled.div`
+  padding: 0 10px;
+`;
+
+const SelectLabel = styled.span`
+  margin-right: 10px;
+`;
+
 const SearchInput = styled(Input.Search)`
   vertical-align: 'middle';
 `;
@@ -68,16 +76,16 @@ const AppLayout = ({ children }) => {
             <a>프로필</a>
           </Link>
         </Menu.Item>
-        <Menu.Item key='menu3'>
+        {/* <Menu.Item key='menu3'>
           <SearchInput enterButton />
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key='menu4'>
           <Link href='/signup'>
             <a>회원가입</a>
           </Link>
         </Menu.Item>
         <Menu.Item key='menu5'>
-          <span>지역</span>
+          <SelectLabel>지역 선택</SelectLabel>
           <Select
             key={location}
             defaultValue={location}
@@ -101,7 +109,7 @@ const AppLayout = ({ children }) => {
           <Weather location={location} />
         </Col>
         <Col xs={24} md={12}>
-          {children}
+          <Wrapper>{children}</Wrapper>
         </Col>
       </Row>
     </div>

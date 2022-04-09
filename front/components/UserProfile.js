@@ -2,8 +2,10 @@ import React, { useCallback } from 'react';
 import { Card, Avatar, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutRequestAction } from '../reducers/user';
+import styled from 'styled-components';
 
 const UserProfile = () => {
+
   const dispatch = useDispatch();
   const { me, logOutLoading } = useSelector(state => state.user);
 
@@ -11,8 +13,12 @@ const UserProfile = () => {
     dispatch(logoutRequestAction());
   }, []);
 
+  const Wrapper = styled(Card)`
+    margin-top: 10px;
+  `;
+
   return (
-    <Card
+    <Wrapper
       actions={[
         <div key='twit'>
           게시글 <br />
@@ -35,7 +41,7 @@ const UserProfile = () => {
       <Button onClick={onLogOut} loading={logOutLoading}>
         로그아웃
       </Button>
-    </Card>
+    </Wrapper>
   );
 };
 

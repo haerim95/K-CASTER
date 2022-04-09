@@ -1,8 +1,10 @@
 import { Button, Form, Input } from 'antd';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useInput from '../hooks/useInput';
 import { UPLOAD_IMAGES_REQUEST, REMOVE_IMAGE, ADD_POST_REQUEST } from '../reducers/post';
+import styled from 'styled-components';
+
 
 const PostForm = () => {
   const { imagePaths, addPostDone } = useSelector(state => state.post);
@@ -53,10 +55,40 @@ const onSubmit = useCallback(() => {
       data: index,
     });
   });
+  
+  const buttonWrapper = useMemo(() => ({marginTop: 10}), []);
+  const inputStyle = useMemo(() => ({resize: 'none'}), []);
+
+  const PreviewWrapper = styled.div`
+    display: flex;
+    flex-flow: wrap;
+    
+    justify-content: 'center';
+    margin-top: 10px;
+  `;
+
+  const CloseBtn = styled(Button)`
+    position: 'absolute';
+    top: 10px;
+    right: 30px;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: rgba(0,0,0,0.6);
+    border: none;
+    padding: 0;
+    color: #ffffff;
+    font-size: 12px;
+  `;
 
   return (
     <Form
-      style={{ margin: '10px 0 20px' }}
+      style={{
+        margin: '10px 0 20px',
+        padding: '10px',
+        backgroundColor: '#EFEFEF',
+        border: '1px solid #EEEEEE'
+      }}
       encType='multipart/form-data'
       onFinish={onSubmit}
     >
@@ -65,6 +97,7 @@ const onSubmit = useCallback(() => {
         onChange={onChangeText}
         maxLength={140}
         placeholder='오늘의 날씨는 어떤가요?'
+        style={inputStyle}
       />
       <div>
         <input
@@ -75,26 +108,28 @@ const onSubmit = useCallback(() => {
           ref={imageInput}
           onChange={onChangeImages}
         />
-        <Button onClick={onClickImageUpload}>이미지 업로드</Button>
-        <Button type='primary' style={{ float: 'right' }} htmlType='submit'>
-          올리기
-        </Button>
+        <div style={buttonWrapper}>
+          <Button onClick={onClickImageUpload}>이미지 업로드</Button>
+          <Button type='primary' style={{ float: 'right' }} htmlType='submit'>
+            올리기
+          </Button>
+        </div>
       </div>
-      <div>
+      <PreviewWrapper>
         {imagePaths.map((v, i) => (
-          <div key={v} style={{ display: 'inline-block' }}>
+          <div
+            key={v}
+            style={{ position: 'relative', display: 'flex', verticalAlign: 'center', marginBottom: '5px'}}
+          >
             <img
               src={`http://localhost:3065/${v}`}
               style={{ width: '200px' }}
               alt={v}
             />
-            <div>
-              <Button onClick={onRemoveImage(i)}>제거</Button>
-            </div>
+            <CloseBtn onClick={onRemoveImage(i)}>X</CloseBtn>
           </div>
         ))}
-      </div>
-      
+      </PreviewWrapper>
     </Form>
   );
 };
