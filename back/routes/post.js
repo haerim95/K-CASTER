@@ -38,10 +38,14 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
       content: req.body.content,
       UserId: req.user.id,
     });
-    if (hashtags){
-      const result = await Promise.all(hashtags.map((tag) => Hashtag.findOrCreate({
-        where: {name: tag.slice(1).toLowerCase()}
-      })));
+    if (hashtags) {
+      const result = await Promise.all(
+        hashtags.map((tag) =>
+          Hashtag.findOrCreate({
+            where: { name: tag.slice(1).toLowerCase() },
+          })
+        )
+      );
 
       await post.addHashtags(result.map((v) => v[0]));
     }
@@ -82,7 +86,6 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
   }
 });
 
-
 // 이미지 올리기
 router.post(
   '/images',
@@ -98,6 +101,61 @@ router.post(
     }
   }
 );
+
+router.get('/:postId', async (req, res, next) => {
+  //GET /post/1
+  try {
+    const post = await Post.findOne({
+      where: { id: req.params.postId },
+    });
+    if (!post) {
+      return res.status(403).send('존재하지 않는 게시글입니다.');
+    }
+    const fullPost = await Post.findOne({
+      where: { id: post.id },
+      include: [
+        {
+          model: Post,
+          as: 'Retweet',
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'nickname'],
+            },
+            {
+              model: Image,
+            },
+          ],
+        },
+        {
+          model: User,
+          attributes: ['id', 'nickname'],
+        },
+        {
+          model: User,
+          as: 'Likers',
+          attributes: ['id', 'nickname'],
+        },
+        {
+          model: Image,
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'nickname'],
+            },
+          ],
+        },
+      ],
+    });
+    res.status(200).json(fullPost);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 
 router.post('/:postId/retweet', isLoggedIn, async (req, res, next) => {
   // 리트윗

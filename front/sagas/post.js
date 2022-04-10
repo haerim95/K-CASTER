@@ -32,7 +32,10 @@ import {
   UPLOAD_IMAGES_FAILURE,
   RETWEET_REQUEST,
   RETWEET_SUCCESS,
-  RETWEET_FAILURE
+  RETWEET_FAILURE,
+  LOAD_POST_REQUEST,
+  LOAD_POST_SUCCESS,
+  LOAD_POST_FAILURE
 } from '../reducers/post';
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
 
@@ -105,7 +108,6 @@ function* addComment(action) {
 }
 
 function loadPostsAPI(lastId) {
-  console.log(`현재 라스트 아이디는? ${lastId}`);
   return axios.get(`/posts?lastId=${lastId || 0}`);
 }
 
@@ -119,6 +121,25 @@ function* loadPosts(action) {
   } catch (err) {
     yield put({
       type: LOAD_POSTS_FAILURE,
+      error: err.response.data
+    });
+  }
+}
+
+function loadPostAPI(data) {
+  return axios.get(`/post/${data}`);
+}
+
+function* loadPost(action) {
+  try {
+    const result = yield call(loadPostAPI, action.data);
+    yield put({
+      type: LOAD_POST_SUCCESS,
+      data: result.data
+    });
+  } catch (err) {
+    yield put({
+      type: LOAD_POST_FAILURE,
       error: err.response.data
     });
   }
@@ -216,6 +237,10 @@ function* watchLoadPosts() {
   yield throttle(5000, LOAD_POSTS_REQUEST, loadPosts);
 }
 
+function* watchLoadPost() {
+  yield takeLatest(LOAD_POST_REQUEST, loadPost);
+}
+
 function* watchLikePost() {
   yield takeLatest(LIKE_POST_REQUEST, likePost);
 }
@@ -241,6 +266,7 @@ export default function* postSaga() {
     fork(watchAddPost),
     fork(watchAddComment),
     fork(watchRemovePost),
-    fork(watchLoadPosts)
+    fork(watchLoadPosts),
+    fork(watchLoadPost)
   ]);
 }

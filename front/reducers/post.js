@@ -2,8 +2,12 @@ import produce from 'immer';
 
 export const initialState = {
   mainPosts: [],
+  singlePost: null,
   imagePaths: [],
   hasMorePosts: true,
+  loadPostLoading: false,
+  loadPostDone: false,
+  loadPostError: null,
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: null,
@@ -29,6 +33,10 @@ export const initialState = {
   retweetDone: false,
   retweetError: null
 };
+
+export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
+export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
+export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 
 export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
@@ -144,6 +152,20 @@ const reducer = (state = initialState, action) => {
         draft.unlikePostLoading = false;
         draft.unlikePostError = action.error;
         break;
+      case LOAD_POST_REQUEST:
+        draft.loadPostsLoading = true;
+        draft.loadPostsDone = false;
+        draft.loadPostsError = null;
+        break;
+      case LOAD_POST_SUCCESS:
+        draft.loadPostsLoading = false;
+        draft.loadPostsDone = true;
+        draft.singlePost = action.data;
+        break;
+      case LOAD_POST_FAILURE:
+        draft.loadPostsLoading = false;
+        draft.loadPostsError = action.error;
+        break;
       case LOAD_POSTS_REQUEST:
         // if (action.lastId) {
         //   draft.loadPostsLoading = true;
@@ -152,9 +174,9 @@ const reducer = (state = initialState, action) => {
         // } else {
         //   draft.mainPosts = [];
         // }
-           draft.loadPostsLoading = true;
-           draft.loadPostsDone = false;
-           draft.loadPostsError = null;
+        draft.loadPostsLoading = true;
+        draft.loadPostsDone = false;
+        draft.loadPostsError = null;
         break;
       case LOAD_POSTS_SUCCESS:
         draft.loadPostsLoading = false;
