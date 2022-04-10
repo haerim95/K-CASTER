@@ -9,6 +9,7 @@ const user = require('../models/user');
 
 router.get('/', async (req, res, next) => {
   // login 유지
+  console.log(req.headers);
   try {
     if (req.user) {
       const fullUserWithoutPassword = await User.findOne({
