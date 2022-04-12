@@ -200,6 +200,55 @@ router.patch('/nickname', isLoggedIn, async (req, res, next) => {
   }
 });
 
+router.delete('/follower/:userId', isLoggedIn, async (req, res, next) => {
+  // /user/1/follow
+  try {
+    const user = await User.findOne({ where: { id: req.params.userId } });
+    if (!user) {
+      res.status(403).send('존재하지 않는 회원입니다.');
+    }
+    await user.removeFollowing(req.user.id);
+    res.status(200).json({ UserId: parseInt(req.params.userId, 10) });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 팔로우 목록 불러오기
+router.get('/followers', isLoggedIn, async (req, res, next) => {
+  try {
+    const user = await User.findOne({ where: { id: req.user.id } });
+    if (!user) {
+      res.status(403).send('존재하지 않는 회원입니다.');
+    }
+    const followers = await user.getFollowers({
+      limit: parseInt(req.query.limit, 10),
+    });
+    res.status(200).json(followers);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// 팔로잉 목록 불러오기
+router.get('/followings', isLoggedIn, async (req, res, next) => {
+  try {
+    const user = await User.findOne({ where: { id: req.user.id } });
+    if (!user) {
+      res.status(403).send('존재하지 않는 회원입니다.');
+    }
+    const followings = await user.getFollowings({
+      limit: parseInt(req.query.limit, 10),
+    });
+    res.status(200).json(followings);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 // 팔로우
 router.patch('/:userId/follow', isLoggedIn, async (req, res, next) => {
   // PATCH /user/1/follow
@@ -226,51 +275,6 @@ router.delete('/:userId/follow', isLoggedIn, async (req, res, next) => {
     }
     await user.removeFollowers(req.user.id);
     res.status(200).json({ UserId: parseInt(req.params.userId, 10) });
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-
-router.delete('/follower/:userId', isLoggedIn, async (req, res, next) => {
-  // /user/1/follow
-  try {
-    const user = await User.findOne({ where: { id: req.params.userId } });
-    if (!user) {
-      res.status(403).send('존재하지 않는 회원입니다.');
-    }
-    await user.removeFollowing(req.user.id);
-    res.status(200).json({ UserId: parseInt(req.params.userId, 10) });
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-
-// 팔로우 목록 불러오기
-router.get('/followers', isLoggedIn, async (req, res, next) => {
-  try {
-    const user = await User.findOne({ where: { id: req.user.id } });
-    if (!user) {
-      res.status(403).send('존재하지 않는 회원입니다.');
-    }
-    const followers = await user.getFollowers();
-    res.status(200).json(followers);
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-
-// 팔로잉 목록 불러오기
-router.get('/followings', isLoggedIn, async (req, res, next) => {
-  try {
-    const user = await User.findOne({ where: { id: req.user.id } });
-    if (!user) {
-      res.status(403).send('존재하지 않는 회원입니다.');
-    }
-    const followings = await user.getFollowings();
-    res.status(200).json(followings);
   } catch (error) {
     console.error(error);
     next(error);
