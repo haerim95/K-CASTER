@@ -11,6 +11,8 @@ import UserProfile from './UserProfile';
 import LoginForm from './LoginForm';
 import Weather from './Weather';
 import { CALL_WEATHER_REQUEST } from '../reducers/weather';
+import useInput from '../hooks/useInput';
+import Router from 'next/router';
 
 const Global = createGlobalStyle`
   .ant-row{
@@ -40,6 +42,7 @@ const SearchInput = styled(Input.Search)`
 `;
 
 const AppLayout = ({ children }) => {
+  const [searchInput, onChangeSearchInput] = useInput('');
   const dispatch = useDispatch();
 
   const { me } = useSelector(state => state.user);
@@ -50,6 +53,10 @@ const AppLayout = ({ children }) => {
   useEffect(() => {
     setLocation('Seoul');
   }, []);
+
+  const onSearch = useCallback(() => {
+    Router.push(`/hashtag/${searchInput}`);
+  }, [searchInput]);
 
   const onChangeLocation = useCallback(
     value => {
@@ -76,9 +83,14 @@ const AppLayout = ({ children }) => {
             <a>프로필</a>
           </Link>
         </Menu.Item>
-        {/* <Menu.Item key='menu3'>
-          <SearchInput enterButton />
-        </Menu.Item> */}
+        <Menu.Item key='menu3'>
+          <SearchInput
+            enterButton
+            value={searchInput}
+            onChange={onChangeSearchInput}
+            onSearch={onSearch}
+          />
+        </Menu.Item>
         <Menu.Item key='menu4'>
           <Link href='/signup'>
             <a>회원가입</a>
