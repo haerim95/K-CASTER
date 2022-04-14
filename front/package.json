@@ -5,8 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "next -p 3060",
-    "build": "next build",
-    "start": "next start"
+    "build": "ANALYZE=true NODE_ENV=production next build"
   },
   "author": "haerim",
   "dependencies": {
