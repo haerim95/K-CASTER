@@ -21,6 +21,12 @@ import {
   RETWEET_REQUEST
 } from '../reducers/post';
 import Link from 'next/link';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/ko';
+
+dayjs.extend(relativeTime);
+dayjs.locale('ko');
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
@@ -129,6 +135,9 @@ const PostCard = ({ post }) => {
               )
             }
           >
+            <div style={{ float: 'right' }}>
+              {dayjs(post.createdAt).format('YYYY.MM.DD').fromNow()}
+            </div>
             <Card.Meta
               avatar={
                 <Link href={`/user/${post.Retweet.User.id}`}>
@@ -142,17 +151,22 @@ const PostCard = ({ post }) => {
             />
           </Card>
         ) : (
-          <Card.Meta
-            avatar={
-              <Link href={`/user/${post.User.id}`}>
-                <a>
-                  <Avatar>{post.User.nickname[0]}</Avatar>
-                </a>
-              </Link>
-            }
-            description={<PostCardContent postData={post.content} />}
-            title={post.User.nickname}
-          />
+          <>
+            <div style={{ float: 'right' }}>
+              {dayjs(post.createdAt).fromNow()}
+            </div>
+            <Card.Meta
+              avatar={
+                <Link href={`/user/${post.User.id}`}>
+                  <a>
+                    <Avatar>{post.User.nickname[0]}</Avatar>
+                  </a>
+                </Link>
+              }
+              description={<PostCardContent postData={post.content} />}
+              title={post.User.nickname}
+            />
+          </>
         )}
       </Card>
       {commentFormOpened && (
