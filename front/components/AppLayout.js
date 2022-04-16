@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import PropTtypes from 'prop-types';
 import Link from 'next/link';
-import { Menu, Input, Row, Col, Select } from 'antd';
+import { Menu, Input, Row, Col } from 'antd';
 import styled from 'styled-components';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,7 +38,7 @@ const SelectLabel = styled.span`
 `;
 
 const SearchInput = styled(Input.Search)`
-  vertical-align: 'middle';
+  vertical-align: middle;
 `;
 
 const AppLayout = ({ children }) => {
@@ -46,28 +46,10 @@ const AppLayout = ({ children }) => {
   const dispatch = useDispatch();
 
   const { me } = useSelector(state => state.user);
-  const { Option } = Select;
-
-  const [location, setLocation] = useState('');
-
-  useEffect(() => {
-    setLocation('Seoul');
-  }, []);
 
   const onSearch = useCallback(() => {
     Router.push(`/hashtag/${searchInput}`);
   }, [searchInput]);
-
-  const onChangeLocation = useCallback(
-    value => {
-      setLocation(value);
-      dispatch({
-        type: CALL_WEATHER_REQUEST,
-        location
-      });
-    },
-    [location]
-  );
 
   return (
     <div>
@@ -89,6 +71,7 @@ const AppLayout = ({ children }) => {
             value={searchInput}
             onChange={onChangeSearchInput}
             onSearch={onSearch}
+            type='primary'
           />
         </Menu.Item>
         <Menu.Item key='menu4'>
@@ -96,31 +79,12 @@ const AppLayout = ({ children }) => {
             <a>회원가입</a>
           </Link>
         </Menu.Item>
-        <Menu.Item key='menu5'>
-          <SelectLabel>지역 선택</SelectLabel>
-          <Select
-            key={location}
-            defaultValue={location}
-            style={{ width: 120 }}
-            onChange={onChangeLocation}
-          >
-            <Option value='Seoul'>서울</Option>
-            <Option value='Daejeon'>대전</Option>
-            <Option value='Gangneung'>강릉</Option>
-            <Option value='Gwangju'>광주</Option>
-            <Option value='Busan'>부산</Option>
-            <Option value='Jeju'>제주</Option>
-          </Select>
-        </Menu.Item>
       </Menu>
-      <Row gutter={8}>
+      <Row gutter={8} style={{ marginTop: 10 }}>
         <Col xs={24} md={4}>
           {me ? <UserProfile /> : <LoginForm />}
         </Col>
-        <Col xs={24} md={8}>
-          <Weather location={location} />
-        </Col>
-        <Col xs={24} md={12}>
+        <Col xs={24} md={16}>
           <Wrapper>{children}</Wrapper>
         </Col>
       </Row>

@@ -5,14 +5,14 @@ import 'antd/dist/antd.css';
 
 import wrapper from '../store/configureStore';
 
-const App = ({ Component }) => {
+const App = ({ Component, location }) => {
   return (
     <>
       <Head>
         <meta charSet='urf-8' />
         <title>익명의 캐스터</title>
       </Head>
-      <Component />
+      <Component location={location} />
 
       {/* ! 수정해야함... */}
       <p>
@@ -29,7 +29,7 @@ const App = ({ Component }) => {
 };
 
 App.propTypes = {
-  Component: PropTypes.elementType.isRequired,
+  Component: PropTypes.elementType.isRequired
 };
 
 export default wrapper.withRedux(App);

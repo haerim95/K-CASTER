@@ -90,7 +90,7 @@ const Weather = ({ location }) => {
     }
   `;
 
-  const cardStyle = useMemo(() => ({ marginTop: 10 }), []);
+  const cardStyle = useMemo(() => ({ marginBottom: 10 }), []);
 
   useEffect(() => {
     dispatch({

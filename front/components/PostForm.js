@@ -2,9 +2,12 @@ import { Button, Form, Input } from 'antd';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useInput from '../hooks/useInput';
-import { UPLOAD_IMAGES_REQUEST, REMOVE_IMAGE, ADD_POST_REQUEST } from '../reducers/post';
+import {
+  UPLOAD_IMAGES_REQUEST,
+  REMOVE_IMAGE,
+  ADD_POST_REQUEST
+} from '../reducers/post';
 import styled from 'styled-components';
-
 
 const PostForm = () => {
   const { imagePaths, addPostDone } = useSelector(state => state.post);
@@ -18,20 +21,20 @@ const PostForm = () => {
     }
   }, [addPostDone]);
 
-const onSubmit = useCallback(() => {
-  if(!text || !text.trim()){
-    return alert('게시글을 작성하세요');
-  }
-  const formData = new FormData();
-  imagePaths.forEach((p) => {
-    formData.append('image', p)
-  });
-  formData.append('content', text);
-  return dispatch({
-    type: ADD_POST_REQUEST,
-    data: formData
-  });
-}, [text, imagePaths]);
+  const onSubmit = useCallback(() => {
+    if (!text || !text.trim()) {
+      return alert('게시글을 작성하세요');
+    }
+    const formData = new FormData();
+    imagePaths.forEach(p => {
+      formData.append('image', p);
+    });
+    formData.append('content', text);
+    return dispatch({
+      type: ADD_POST_REQUEST,
+      data: formData
+    });
+  }, [text, imagePaths]);
 
   const onClickImageUpload = useCallback(() => {
     imageInput.current.click();
@@ -49,20 +52,20 @@ const onSubmit = useCallback(() => {
     });
   }, []);
 
-  const onRemoveImage = useCallback((index) => () => {
+  const onRemoveImage = useCallback(index => () => {
     dispatch({
       type: REMOVE_IMAGE,
-      data: index,
+      data: index
     });
   });
-  
-  const buttonWrapper = useMemo(() => ({marginTop: 10}), []);
-  const inputStyle = useMemo(() => ({resize: 'none'}), []);
+
+  const buttonWrapper = useMemo(() => ({ marginTop: 10 }), []);
+  const inputStyle = useMemo(() => ({ resize: 'none' }), []);
 
   const PreviewWrapper = styled.div`
     display: flex;
     flex-flow: wrap;
-    
+
     justify-content: 'center';
     margin-top: 10px;
   `;
@@ -74,7 +77,7 @@ const onSubmit = useCallback(() => {
     width: 20px;
     height: 20px;
     border-radius: 10px;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0, 0, 0, 0.6);
     border: none;
     padding: 0;
     color: #ffffff;
@@ -86,7 +89,7 @@ const onSubmit = useCallback(() => {
       style={{
         margin: '10px 0 20px',
         padding: '10px',
-        backgroundColor: '#EFEFEF',
+        backgroundColor: '#F7F5F2',
         border: '1px solid #EEEEEE'
       }}
       encType='multipart/form-data'
@@ -110,7 +113,15 @@ const onSubmit = useCallback(() => {
         />
         <div style={buttonWrapper}>
           <Button onClick={onClickImageUpload}>이미지 업로드</Button>
-          <Button type='primary' style={{ float: 'right' }} htmlType='submit'>
+          <Button
+            type='primary'
+            style={{
+              float: 'right',
+              backgroundColor: '#8D8DAA',
+              border: '1px solid #8D8DAA'
+            }}
+            htmlType='submit'
+          >
             올리기
           </Button>
         </div>
@@ -119,7 +130,12 @@ const onSubmit = useCallback(() => {
         {imagePaths.map((v, i) => (
           <div
             key={v}
-            style={{ position: 'relative', display: 'flex', verticalAlign: 'center', marginBottom: '5px'}}
+            style={{
+              position: 'relative',
+              display: 'flex',
+              verticalAlign: 'center',
+              marginBottom: '5px'
+            }}
           >
             <img
               src={`http://localhost:3065/${v}`}

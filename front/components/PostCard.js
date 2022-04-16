@@ -135,8 +135,8 @@ const PostCard = ({ post }) => {
               )
             }
           >
-            <div style={{ float: 'right' }}>
-              {dayjs(post.createdAt).format('YYYY.MM.DD').fromNow()}
+            <div style={{ float: 'right', color: '#8D8DAA' }}>
+              {dayjs(post.createdAt).fromNow()}
             </div>
             <Card.Meta
               avatar={
@@ -152,7 +152,7 @@ const PostCard = ({ post }) => {
           </Card>
         ) : (
           <>
-            <div style={{ float: 'right' }}>
+            <div style={{ float: 'right', color: '#8D8DAA' }}>
               {dayjs(post.createdAt).fromNow()}
             </div>
             <Card.Meta
