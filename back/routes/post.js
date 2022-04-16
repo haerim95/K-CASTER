@@ -37,6 +37,7 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
     const post = await Post.create({
       content: req.body.content,
       UserId: req.user.id,
+      location: req.body.location,
     });
     if (hashtags) {
       const result = await Promise.all(

@@ -33,6 +33,7 @@ const PostCard = ({ post }) => {
   const { removePostLoading } = useSelector(state => state.post);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const id = useSelector(state => state.user.me?.id);
+  const [currentLocale, setCurrentLocale] = useState(post.location);
 
   const onLike = useCallback(() => {
     if (!id) {
@@ -78,13 +79,34 @@ const PostCard = ({ post }) => {
     });
   }, [id]);
 
-  const cardStyle = useMemo(() => ({ marginTop: 10 }), []);
+  // const cardStyle = useMemo(() => ({ marginTop: 10 }), []);
 
   const liked = post.Likers.find(v => v.id === id);
+
+  function localeKo(currentLocale) {
+    switch (currentLocale) {
+      case 'Seoul':
+        return '서울';
+      case 'Daejeon':
+        return '대전';
+      case 'Gangneung':
+        return '강릉';
+      case 'Gwangju':
+        return '광주';
+      case 'Busan':
+        return '부산';
+      case 'Jeju':
+        return '제주';
+      default:
+        return '제 3세계';
+    }
+  }
+  console.log(currentLocale);
+
   return (
     <div style={{ marginBottom: 20 }}>
       <Card
-        style={cardStyle}
+        // style={cardStyle}
         cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[
           <RetweetOutlined key='retweet' onClick={onRetweet} />,
@@ -123,7 +145,9 @@ const PostCard = ({ post }) => {
           </Popover>
         ]}
         title={
-          post.RetweetId ? `${post.User.nickname}님이 리트윗 하셨습니다.` : null
+          post.RetweetId
+            ? `${post.User.nickname}님이 리트윗 하셨습니다.`
+            : `${localeKo(post.location)}의 캐스터`
         }
         extra={id && <FollowButton post={post} />}
       >
@@ -134,6 +158,7 @@ const PostCard = ({ post }) => {
                 <PostImages images={post.Retweet.Images} />
               )
             }
+            title={`${localeKo(post.location)}의 캐스터`}
           >
             <div style={{ float: 'right', color: '#8D8DAA' }}>
               {dayjs(post.createdAt).fromNow()}

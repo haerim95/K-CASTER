@@ -1,5 +1,11 @@
 import { Button, Form, Input } from 'antd';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useInput from '../hooks/useInput';
 import {
@@ -8,18 +14,28 @@ import {
   ADD_POST_REQUEST
 } from '../reducers/post';
 import styled from 'styled-components';
+import WeatherButton from './WeatherButton';
 
 const PostForm = () => {
   const { imagePaths, addPostDone } = useSelector(state => state.post);
   const dispatch = useDispatch();
   const imageInput = useRef();
   const [text, onChangeText, setText] = useInput('');
+  const [locationForm, setLocationForm] = useState('');
 
   useEffect(() => {
     if (addPostDone) {
       setText('');
     }
   }, [addPostDone]);
+
+  const onLocationSelect = useCallback(
+    e => {
+      setLocationForm(e.target.value);
+      console.log(locationForm);
+    },
+    [locationForm]
+  );
 
   const onSubmit = useCallback(() => {
     if (!text || !text.trim()) {
@@ -30,6 +46,8 @@ const PostForm = () => {
       formData.append('image', p);
     });
     formData.append('content', text);
+    formData.append('location', locationForm);
+    console.log(formData);
     return dispatch({
       type: ADD_POST_REQUEST,
       data: formData
@@ -84,10 +102,19 @@ const PostForm = () => {
     font-size: 12px;
   `;
 
+  const LocationWrapper = styled.div`
+    margin-bottom: 10px;
+    width: '100%';
+    vertical-align: middle;
+    padding: 10px;
+    background-color: #f7f5f2;
+    border-radius: 4px;
+  `;
+
   return (
     <Form
       style={{
-        margin: '10px 0 20px',
+        marginBottom: '20px',
         padding: '10px',
         backgroundColor: '#F7F5F2',
         border: '1px solid #EEEEEE'
@@ -95,6 +122,13 @@ const PostForm = () => {
       encType='multipart/form-data'
       onFinish={onSubmit}
     >
+      <LocationWrapper>
+        <p>어느 지역에서 작성중인가요?</p>
+        <WeatherButton
+          location={locationForm}
+          onLocationSelect={onLocationSelect}
+        />
+      </LocationWrapper>
       <Input.TextArea
         value={text}
         onChange={onChangeText}

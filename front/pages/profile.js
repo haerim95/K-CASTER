@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { Row, Col } from 'antd';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
 import Router from 'next/router';
@@ -58,19 +59,24 @@ const Profile = () => {
         <title>내 프로필 | 익명의 캐스터</title>
       </Head>
       <AppLayout>
-        <NicknameEditForm />
-        <FollowList
-          header='팔로잉'
-          data={followingsData}
-          onClickMore={loadMoreFollowings}
-          loading={!followingsData && !followingError}
-        />
-        <FollowList
-          header='팔로워'
-          data={followersData}
-          onClickMore={loadMoreFollowers}
-          loading={!followersData && !followerError}
-        />
+        <Row gutter={8}>
+          <Col xs={24} md={8}>
+            <NicknameEditForm />
+            <FollowList
+              header='팔로잉'
+              data={followingsData}
+              onClickMore={loadMoreFollowings}
+              loading={!followingsData && !followingError}
+            />
+            <FollowList
+              header='팔로워'
+              data={followersData}
+              onClickMore={loadMoreFollowers}
+              loading={!followersData && !followerError}
+            />
+          </Col>
+          <Col></Col>
+        </Row>
       </AppLayout>
     </>
   );

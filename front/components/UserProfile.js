@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Card, Avatar, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutRequestAction } from '../reducers/user';
@@ -13,12 +13,16 @@ const UserProfile = () => {
     dispatch(logoutRequestAction());
   }, []);
 
-  const Wrapper = styled(Card)`
-    margin-top: 10px;
-  `;
+  const cardWrapper = useMemo(
+    () => ({
+      marginBottom: 10
+    }),
+    []
+  );
 
   return (
-    <Wrapper
+    <Card
+      style={cardWrapper}
       actions={[
         <div key='twit'>
           <Link href={`/user/${me.id}`}>
@@ -59,7 +63,7 @@ const UserProfile = () => {
       <Button onClick={onLogOut} loading={logOutLoading}>
         로그아웃
       </Button>
-    </Wrapper>
+    </Card>
   );
 };
 

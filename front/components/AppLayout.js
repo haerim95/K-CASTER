@@ -74,17 +74,19 @@ const AppLayout = ({ children }) => {
             type='primary'
           />
         </Menu.Item>
-        <Menu.Item key='menu4'>
-          <Link href='/signup'>
-            <a>회원가입</a>
-          </Link>
-        </Menu.Item>
+        {me && me.id ? null : (
+          <Menu.Item key='menu4'>
+            <Link href='/signup'>
+              <a>회원가입</a>
+            </Link>
+          </Menu.Item>
+        )}
       </Menu>
       <Row gutter={8} style={{ marginTop: 10 }}>
         <Col xs={24} md={4}>
           {me ? <UserProfile /> : <LoginForm />}
         </Col>
-        <Col xs={24} md={16}>
+        <Col xs={24} md={20}>
           <Wrapper>{children}</Wrapper>
         </Col>
       </Row>

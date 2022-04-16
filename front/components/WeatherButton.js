@@ -37,18 +37,19 @@ const WeatherButton = ({ location, onLocationSelect }) => {
     color: #8d8daa;
     border: none;
     border-radius: 4px;
+    margin-top: 5px;
     &.active {
       color: #ffffff;
       background-color: #8d8daa;
     }
   `;
-
-  useEffect(() => {
-    console.log(location);
-  });
+  const Wrapper = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+  `;
 
   return (
-    <>
+    <Wrapper>
       {locationArr.map((names, index, e) => (
         <Button
           key={names.value}
@@ -60,7 +61,7 @@ const WeatherButton = ({ location, onLocationSelect }) => {
           {names.name}
         </Button>
       ))}
-    </>
+    </Wrapper>
   );
 };
 

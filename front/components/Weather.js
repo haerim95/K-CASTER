@@ -1,17 +1,29 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { Card, Spin, Space } from 'antd';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { CALL_WEATHER_REQUEST } from '../reducers/weather';
+import WeatherButton from '../components/WeatherButton';
 
-const Weather = ({ location }) => {
+const Weather = ({}) => {
   const dispatch = useDispatch();
   const { weatherInfo, weatherCallLoading } = useSelector(
     state => state.weather
   );
+  const [active, setActive] = useState(false);
+
+  const [location, setLocation] = useState('');
+
+  useEffect(() => {
+    setLocation('Seoul');
+  }, []);
 
   // 스타일
+  const LocationWrapper = styled.div`
+    vertical-align: middle;
+    flex-wrap: wrap;
+  `;
   const WeatherIcon = styled.div`
     position: relative;
     width: 120px;
@@ -56,6 +68,8 @@ const Weather = ({ location }) => {
     justify-content: center;
     align-items: center;
 
+    margin-top: 20px;
+
     .iconWrap {
       display: flex;
       align-items: center;
@@ -90,8 +104,6 @@ const Weather = ({ location }) => {
     }
   `;
 
-  const cardStyle = useMemo(() => ({ marginBottom: 10 }), []);
-
   useEffect(() => {
     dispatch({
       type: CALL_WEATHER_REQUEST,
@@ -99,9 +111,29 @@ const Weather = ({ location }) => {
     });
   }, [location]);
 
+  const onLocationSelect = useCallback(
+    e => {
+      setLocation(e.target.value);
+    },
+    [active]
+  );
+
+  const marginBottom = useMemo(() => ({ marginBottom: 10 }), []);
+
   return (
-    <div>
-      <Card title='오늘의 날씨' style={cardStyle}>
+    <div style={marginBottom}>
+      <Card
+        title={
+          <LocationWrapper>
+            <p>오늘의 날씨</p>
+            <WeatherButton
+              active={active}
+              location={location}
+              onLocationSelect={onLocationSelect}
+            />
+          </LocationWrapper>
+        }
+      >
         <WeatherStyle>
           {weatherCallLoading === false ? (
             <div>

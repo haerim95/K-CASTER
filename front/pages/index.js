@@ -12,30 +12,13 @@ import { LOAD_POSTS_REQUEST } from '../reducers/post';
 import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
 import wrapper from '../store/configureStore';
 import axios from 'axios';
-import WeatherButton from '../components/WeatherButton';
 
 const Home = ({}) => {
-  const LocationWrapper = styled.div`
-    margin-bottom: 10px;
-    width: '100%';
-    display: flex;
-    vertical-align: middle;
-    padding: 10px;
-    background-color: #f7f5f2;
-    border-radius: 4px;
-  `;
-
   const dispatch = useDispatch();
   const [ref, inView] = useInView();
   const { me } = useSelector(state => state.user);
   const { mainPosts, hasMorePosts, loadPostsLoading, id, retweetError } =
     useSelector(state => state.post);
-  const [location, setLocation] = useState('');
-  const [active, setActive] = useState(false);
-
-  useEffect(() => {
-    setLocation('Seoul');
-  }, []);
 
   useEffect(() => {
     if (retweetError) {
@@ -64,13 +47,6 @@ const Home = ({}) => {
     };
   }, [hasMorePosts, loadPostsLoading, mainPosts]);
 
-  const onLocationSelect = useCallback(
-    e => {
-      setLocation(e.target.value);
-    },
-    [active]
-  );
-
   return (
     <AppLayout>
       <Row gutter={8}>
@@ -79,13 +55,6 @@ const Home = ({}) => {
         </Col>
         <Col xs={24} md={14}>
           <>
-            <LocationWrapper>
-              <WeatherButton
-                active={active}
-                location={location}
-                onLocationSelect={onLocationSelect}
-              />
-            </LocationWrapper>
             {me && <PostForm />}
             {mainPosts.map(post => (
               <PostCard key={post.id} post={post} />
