@@ -60,11 +60,20 @@ const AppLayout = ({ children }) => {
             <a>익명의 캐스터</a>
           </Link>
         </Menu.Item>
-        <Menu.Item key='menu2'>
-          <Link href='/profile'>
-            <a>프로필</a>
-          </Link>
-        </Menu.Item>
+        {me && me.id ? (
+          <Menu.Item key='menu4'>
+            <Link href={`/profile/${me.id}`}>
+              <a>프로필</a>
+            </Link>
+          </Menu.Item>
+        ) : null}
+        {me && me.id ? null : (
+          <Menu.Item key='menu4'>
+            <Link href='/signup'>
+              <a>회원가입</a>
+            </Link>
+          </Menu.Item>
+        )}
         <Menu.Item key='menu3'>
           <SearchInput
             enterButton
@@ -74,13 +83,6 @@ const AppLayout = ({ children }) => {
             type='primary'
           />
         </Menu.Item>
-        {me && me.id ? null : (
-          <Menu.Item key='menu4'>
-            <Link href='/signup'>
-              <a>회원가입</a>
-            </Link>
-          </Menu.Item>
-        )}
       </Menu>
       <Row gutter={8} style={{ marginTop: 10 }}>
         <Col xs={24} md={4}>

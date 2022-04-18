@@ -33,6 +33,11 @@ export const initialState = {
   retweetDone: false,
   retweetError: null
 };
+
+export const LOAD_ME_POSTS_REQUEST = 'LOAD_ME_POSTS_REQUEST';
+export const LOAD_ME_POSTS_SUCCESS = 'LOAD_ME_POSTS_SUCCESS';
+export const LOAD_ME_POSTS_FAILURE = 'LOAD_ME_POSTS_FAILURE';
+
 export const LOAD_USER_POSTS_REQUEST = 'LOAD_USER_POSTS_REQUEST';
 export const LOAD_USER_POSTS_SUCCESS = 'LOAD_USER_POSTS_SUCCESS';
 export const LOAD_USER_POSTS_FAILURE = 'LOAD_USER_POSTS_FAILURE';
@@ -176,6 +181,7 @@ const reducer = (state = initialState, action) => {
       case LOAD_USER_POSTS_REQUEST:
       case LOAD_HASHTAG_POSTS_REQUEST:
       case LOAD_POSTS_REQUEST:
+      case LOAD_ME_POSTS_REQUEST:
         // if (action.lastId) {
         //   draft.loadPostsLoading = true;
         //   draft.loadPostsDone = false;
@@ -190,6 +196,7 @@ const reducer = (state = initialState, action) => {
       case LOAD_USER_POSTS_SUCCESS:
       case LOAD_HASHTAG_POSTS_SUCCESS:
       case LOAD_POSTS_SUCCESS:
+      case LOAD_ME_POSTS_SUCCESS:
         draft.loadPostsLoading = false;
         draft.loadPostsDone = true;
         draft.mainPosts = draft.mainPosts.concat(action.data);
@@ -198,6 +205,7 @@ const reducer = (state = initialState, action) => {
       case LOAD_USER_POSTS_FAILURE:
       case LOAD_HASHTAG_POSTS_FAILURE:
       case LOAD_POSTS_FAILURE:
+      case LOAD_ME_POSTS_FAILURE:
         draft.loadPostsLoading = false;
         draft.loadPostsError = action.error;
         break;

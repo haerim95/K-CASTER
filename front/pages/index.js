@@ -51,7 +51,7 @@ const Home = ({}) => {
     <AppLayout>
       <Row gutter={8}>
         <Col xs={24} md={10}>
-          <Weather location={location} />
+          <Weather />
         </Col>
         <Col xs={24} md={14}>
           <>

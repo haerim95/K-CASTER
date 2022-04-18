@@ -41,7 +41,10 @@ import {
   LOAD_HASHTAG_POSTS_SUCCESS,
   LOAD_HASHTAG_POSTS_FAILURE,
   LOAD_USER_POSTS_SUCCESS,
-  LOAD_USER_POSTS_FAILURE
+  LOAD_USER_POSTS_FAILURE,
+  LOAD_ME_POSTS_REQUEST,
+  LOAD_ME_POSTS_SUCCESS,
+  LOAD_ME_POSTS_FAILURE
 } from '../reducers/post';
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
 
@@ -130,6 +133,26 @@ function* loadHashtagPosts(action) {
     console.log(err);
     yield put({
       type: LOAD_HASHTAG_POSTS_FAILURE,
+      error: err.response.data
+    });
+  }
+}
+
+function loadMePostsAPI(data, lastId) {
+  return axios.get(`/profile/${data}/posts?lastId=${lastId || 0}`);
+}
+
+function* loadMePosts(action) {
+  try {
+    const result = yield call(loadMePostsAPI, action.data, action.lastId);
+    yield put({
+      type: LOAD_ME_POSTS_SUCCESS,
+      data: result.data
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: LOAD_ME_POSTS_FAILURE,
       error: err.response.data
     });
   }
@@ -293,6 +316,10 @@ function* watchLoadUserPosts() {
   yield throttle(5000, LOAD_USER_POSTS_REQUEST, loadUserPosts);
 }
 
+function* watchLoadMePosts() {
+  yield throttle(5000, LOAD_ME_POSTS_REQUEST, loadMePosts);
+}
+
 function* watchLoadHashtagPosts() {
   yield throttle(5000, LOAD_HASHTAG_POSTS_REQUEST, loadHashtagPosts);
 }
@@ -327,6 +354,7 @@ export default function* postSaga() {
     fork(watchAddComment),
     fork(watchRemovePost),
     fork(watchLoadPosts),
+    fork(watchLoadMePosts),
     fork(watchLoadUserPosts),
     fork(watchLoadHashtagPosts),
     fork(watchLoadPost)
