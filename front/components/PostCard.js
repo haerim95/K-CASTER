@@ -101,7 +101,6 @@ const PostCard = ({ post }) => {
         return '제 3세계';
     }
   }
-  console.log(currentLocale);
 
   return (
     <div style={{ marginBottom: 20 }}>

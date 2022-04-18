@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce from '../util/produce';
 
 export const initialState = {
   loadMyInfoLoading: false,
@@ -35,7 +35,7 @@ export const initialState = {
   removeFollowerDone: false,
   removeFollowerError: null,
   me: null,
-  userInfo: null,
+  userInfo: null
 };
 
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';

@@ -26,28 +26,31 @@ const PostForm = () => {
   useEffect(() => {
     if (addPostDone) {
       setText('');
+      setLocationForm('');
     }
   }, [addPostDone]);
 
   const onLocationSelect = useCallback(
     e => {
       setLocationForm(e.target.value);
-      console.log(locationForm);
     },
     [locationForm]
   );
 
   const onSubmit = useCallback(() => {
+    if (locationForm === '') {
+      return alert('지역을 선택해주세요');
+    }
     if (!text || !text.trim()) {
       return alert('게시글을 작성하세요');
     }
+
     const formData = new FormData();
     imagePaths.forEach(p => {
       formData.append('image', p);
     });
     formData.append('content', text);
     formData.append('location', locationForm);
-    console.log(formData);
     return dispatch({
       type: ADD_POST_REQUEST,
       data: formData

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import PropTtypes from 'prop-types';
 import Link from 'next/link';
 import { Menu, Input, Row, Col } from 'antd';
@@ -29,12 +29,15 @@ const Global = createGlobalStyle`
   }
 `;
 
-const Wrapper = styled.div`
-  padding: 0 10px;
+const Common = styled.div`
+  @media screen and (min-width: 1824px) {
+    max-width: 1824px;
+    margin: 0 auto;
+  }
 `;
 
-const SelectLabel = styled.span`
-  margin-right: 10px;
+const Wrapper = styled.div`
+  padding: 0 10px;
 `;
 
 const SearchInput = styled(Input.Search)`
@@ -52,7 +55,7 @@ const AppLayout = ({ children }) => {
   }, [searchInput]);
 
   return (
-    <div>
+    <Common>
       <Global />
       <Menu mode='horizontal'>
         <Menu.Item key='menu1'>
@@ -80,6 +83,7 @@ const AppLayout = ({ children }) => {
             value={searchInput}
             onChange={onChangeSearchInput}
             onSearch={onSearch}
+            placeholder='#해시태그를 입력해주세요'
             type='primary'
           />
         </Menu.Item>
@@ -92,7 +96,7 @@ const AppLayout = ({ children }) => {
           <Wrapper>{children}</Wrapper>
         </Col>
       </Row>
-    </div>
+    </Common>
   );
 };
 
