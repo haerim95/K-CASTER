@@ -18,7 +18,7 @@ const App = ({ Component, location }) => {
 
       <p style={copyRight}>
         <a
-          href='https://github.com/haerim95/anonymous-caster'
+          href='https://github.com/haerim95/k-caster'
           target='_blank'
           rel='noreferrer nopener'
         >
