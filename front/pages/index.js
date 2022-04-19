@@ -54,6 +54,7 @@ const Home = ({}) => {
     border-radius: 4px;
     margin-bottom: 15px;
     display: flex;
+    flex-wrap: wrap;
     vertical-align: center;
     justify-content: space-between;
     p {
