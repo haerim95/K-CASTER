@@ -27,7 +27,9 @@
     "object-curly-newline": "off",
     "linebreak-style": "off",
     "no-param-reassign": "off",
-    "jsxSingleQuote": true
+    "jsxSingleQuote": true,
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off"
   },
   "settings": {
     "import/resolver": {
