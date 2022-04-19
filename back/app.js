@@ -8,6 +8,8 @@ const userRouter = require('./routes/user');
 const postsRouter = require('./routes/posts');
 const hashtagRouter = require('./routes/hashtag');
 const profileRouter = require('./routes/profile');
+const hpp = require('hpp');
+const helmet = require('helmet');
 
 const db = require('./models');
 const app = express();
@@ -27,10 +29,17 @@ db.sequelize
   .catch(console.error);
 passportConfig();
 
-app.use(morgan('dev'));
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+  app.use(hpp());
+  app.use(helmet());
+} else {
+  app.use(morgan('dev'));
+}
+
 app.use(
   cors({
-    origin: 'http://localhost:3060',
+    origin: ['http://localhost:3060', 'kcaster.com'],
     credentials: true,
   })
 );
