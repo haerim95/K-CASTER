@@ -219,6 +219,11 @@ router.post('/:postId/retweet', isLoggedIn, async (req, res, next) => {
           model: Image,
         },
         {
+          model: User,
+          as: 'Likers',
+          attributes: ['id', 'nickname'],
+        },
+        {
           model: Comment,
           include: [
             {
