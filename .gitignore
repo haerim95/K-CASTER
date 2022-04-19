@@ -150,3 +150,8 @@ sketch
 .next
 next/
 /.next
+
+.serverless
+/front/build/
+react-caster.pem
+node_modules
