@@ -16,6 +16,26 @@ const ErrorMessage = styled.div`
   color: red;
 `;
 
+const InputStyle = styled.div`
+  margin-bottom: 15px;
+  margin: 0 auto;
+  input {
+    max-width: 450px;
+  }
+`;
+const Notice = styled.div`
+  margin: 15px 0 10px;
+  max-width: 600px;
+
+  padding: 20px;
+  background-color: #f7f5f2;
+  p {
+    margin: 0px;
+    margin-bottom: 5px;
+    color: #222222;
+  }
+`;
+
 const Signup = () => {
   const dispatch = useDispatch();
   const { signUpLoading, signUpDone, signUpError, me } = useSelector(
@@ -87,10 +107,10 @@ const Signup = () => {
   return (
     <AppLayout>
       <Head>
-        <title>회원가입 | 익명의 캐스터</title>
+        <title>회원가입 | K-캐스터</title>
       </Head>
       <Form onFinish={onSubmit}>
-        <div>
+        <InputStyle>
           <label htmlFor='user-email'>이메일</label> <br />
           <Input
             name='user-email'
@@ -99,8 +119,8 @@ const Signup = () => {
             required
             onChange={onChangeEmail}
           />
-        </div>
-        <div>
+        </InputStyle>
+        <InputStyle>
           <label htmlFor='user-nick'>닉네임</label> <br />
           <Input
             name='user-nick'
@@ -108,8 +128,8 @@ const Signup = () => {
             required
             onChange={onChangeNickName}
           />
-        </div>
-        <div>
+        </InputStyle>
+        <InputStyle>
           <label htmlFor='user-password'>비밀번호</label> <br />
           <Input
             name='user-password'
@@ -118,8 +138,8 @@ const Signup = () => {
             required
             onChange={onChangePassword}
           />
-        </div>
-        <div>
+        </InputStyle>
+        <InputStyle>
           <label htmlFor='user-password-check'>비밀번호 체크</label> <br />
           <Input
             name='user-password-check'
@@ -131,20 +151,32 @@ const Signup = () => {
           {passwordError && (
             <ErrorMessage>비밀번호가 일치하지 않습니다.</ErrorMessage>
           )}
-        </div>
-        <div>
+        </InputStyle>
+        <Notice>
+          <p>
+            본 사이트는 포트폴리오 사이트입니다. 인지 후 가입을 진행해주세요.
+          </p>
+          <p>가입하기 귀찮으시다면 하단의 정보로 로그인 진행해주세요.</p>
+          <p>아이디 : test@test.com 비밀번호 : 123qwe!</p>
+          <p>
+            테스트 아이디를 이용하시더라도 사이트를 즐겨주시면 감사하겠습니다.
+            :)
+          </p>
+          <p>신규 가입도 환영합니다!</p>
+        </Notice>
+        <InputStyle>
           <Checkbox name='user-term' checked={term} onChange={onChangeTerm}>
             약관에 동의합니다.
           </Checkbox>
           {termError && (
             <ErrorMessage>약관에 동의해주셔야 합니다.</ErrorMessage>
           )}
-        </div>
-        <div style={style}>
+        </InputStyle>
+        <InputStyle style={style}>
           <Button type='primary' htmlType='submit' loading={signUpLoading}>
             가입하기
           </Button>
-        </div>
+        </InputStyle>
       </Form>
     </AppLayout>
   );

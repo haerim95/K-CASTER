@@ -88,7 +88,7 @@ const Profile = () => {
   return (
     <>
       <Head>
-        <title>내 프로필 | 익명의 캐스터</title>
+        <title>내 프로필 | K-캐스터</title>
       </Head>
       <AppLayout>
         <Row gutter={8}>

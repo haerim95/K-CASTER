@@ -11,6 +11,7 @@ import PostCard from '../components/PostCard';
 import { LOAD_POSTS_REQUEST } from '../reducers/post';
 import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
 import wrapper from '../store/configureStore';
+import Link from 'next/link';
 import axios from 'axios';
 
 const Home = ({}) => {
@@ -47,6 +48,20 @@ const Home = ({}) => {
     };
   }, [hasMorePosts, loadPostsLoading, mainPosts]);
 
+  const NoticeLogin = styled.div`
+    padding: 20px;
+    background-color: #f7f5f2;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    display: flex;
+    vertical-align: center;
+    justify-content: space-between;
+    p {
+      padding: 0px;
+      margin: 0px;
+    }
+  `;
+
   return (
     <AppLayout>
       <Row gutter={8}>
@@ -55,7 +70,19 @@ const Home = ({}) => {
         </Col>
         <Col xs={24} md={14}>
           <>
-            {me && <PostForm />}
+            {me ? (
+              <PostForm />
+            ) : (
+              <NoticeLogin>
+                <p>게시글을 작성하려면 로그인을 해주세요.</p>
+                <p>
+                  아이디가 없으신가요?{' '}
+                  <Link href='/signup'>
+                    <a>회원가입</a>
+                  </Link>
+                </p>
+              </NoticeLogin>
+            )}
             {mainPosts.map(post => (
               <PostCard key={post.id} post={post} />
             ))}

@@ -171,6 +171,15 @@ const Weather = ({}) => {
           )}
         </WeatherStyle>
       </Card>
+      <p>
+        <a
+          href='https://github.com/haerim95/anonymous-caster'
+          target='_blank'
+          rel='noreferrer nopener'
+        >
+          Made By Hearim @GitRepository
+        </a>
+      </p>
     </div>
   );
 };

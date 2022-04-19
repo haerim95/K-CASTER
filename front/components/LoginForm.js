@@ -10,10 +10,19 @@ import { loginRequestAction } from '../reducers/user';
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
+
+  button {
+    width: 50%;
+    border-radius: 0px;
+  }
 `;
 
 const FormWrapper = styled(Form)`
   padding: 10px;
+`;
+
+const InputStyle = styled.div`
+  margin-bottom: 10px;
 `;
 
 const LoginForm = () => {
@@ -35,7 +44,7 @@ const LoginForm = () => {
 
   return (
     <FormWrapper onFinish={onSunmitForm}>
-      <div>
+      <InputStyle>
         <label htmlFor='user-id'>이메일</label>
         <br />
         <Input
@@ -45,8 +54,8 @@ const LoginForm = () => {
           onChange={onChangeEmail}
           required
         />
-      </div>
-      <div>
+      </InputStyle>
+      <InputStyle>
         <label htmlFor='user-password'>비밀번호</label>
         <br />
         <Input
@@ -56,7 +65,7 @@ const LoginForm = () => {
           onChange={onChangePassword}
           required
         />
-      </div>
+      </InputStyle>
       <ButtonWrapper>
         <Button type='primary' htmlType='submit' loading={logInLoading}>
           로그인

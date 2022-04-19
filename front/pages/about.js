@@ -14,7 +14,7 @@ const Profile = () => {
   return (
     <AppLayout>
       <Head>
-        <title>익명의 캐스터</title>
+        <title>K-캐스터</title>
       </Head>
       {userInfo ? (
         <Card
@@ -39,7 +39,7 @@ const Profile = () => {
           <Card.Meta
             avatar={<Avatar>{userInfo.nickname[0]}</Avatar>}
             title={userInfo.nickname}
-            description='노드버드 매니아'
+            description='K-caster'
           />
         </Card>
       ) : null}

@@ -60,7 +60,7 @@ const AppLayout = ({ children }) => {
       <Menu mode='horizontal'>
         <Menu.Item key='menu1'>
           <Link href='/'>
-            <a>익명의 캐스터</a>
+            <a>K-캐스터</a>
           </Link>
         </Menu.Item>
         {me && me.id ? (

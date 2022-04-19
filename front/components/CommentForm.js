@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,14 +28,28 @@ const CommentForm = ({ post }) => {
     });
   }, [commentText, id]);
 
+  const commentStyle = useMemo(
+    () => ({
+      padding: 10,
+      height: 100,
+      marginTop: 10,
+      backgroundColor: '#f7f5f2',
+      border: 'none',
+      resize: 'none'
+    }),
+    []
+  );
+
   return (
     <Form onFinish={onSubmitComment}>
       <Form.Item style={{ position: 'relative', margin: 0 }}>
         {me ? (
           <Input.TextArea
+            style={commentStyle}
             value={commentText}
             onChange={onChangeCommentText}
-            row={4}
+            row={5}
+            placeholder='댓글을 입력해주세요.'
           />
         ) : (
           <Input.TextArea
