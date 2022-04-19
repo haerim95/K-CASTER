@@ -15,6 +15,7 @@ import {
 } from '../reducers/post';
 import styled from 'styled-components';
 import WeatherButton from './WeatherButton';
+import { backUrl } from '../config/config';
 
 const PostForm = () => {
   const { imagePaths, addPostDone } = useSelector(state => state.post);
@@ -174,11 +175,7 @@ const PostForm = () => {
               marginBottom: '5px'
             }}
           >
-            <img
-              src={`http://localhost:3065/${v}`}
-              style={{ width: '200px' }}
-              alt={v}
-            />
+            <img src={`${backUrl}/${v}`} style={{ width: '200px' }} alt={v} />
             <CloseBtn onClick={onRemoveImage(i)}>X</CloseBtn>
           </div>
         ))}
