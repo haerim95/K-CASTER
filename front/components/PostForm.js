@@ -175,7 +175,7 @@ const PostForm = () => {
               marginBottom: '5px'
             }}
           >
-            <img src={`${backUrl}/${v}`} style={{ width: '200px' }} alt={v} />
+            <img src={v} style={{ width: '200px' }} alt={v} />
             <CloseBtn onClick={onRemoveImage(i)}>X</CloseBtn>
           </div>
         ))}
