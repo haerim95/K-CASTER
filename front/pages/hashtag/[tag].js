@@ -51,9 +51,9 @@ const Hashtag = () => {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async context => {
-  console.log(context);
+  // console.log(context);
   const cookie = context.req ? context.req.headers.cookie : '';
-  console.log(context);
+  // console.log(context);
   axios.defaults.headers.Cookie = '';
   if (context.req && cookie) {
     axios.defaults.headers.Cookie = cookie;
