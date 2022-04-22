@@ -4,8 +4,8 @@ const sharp = require('sharp');
 const s3 = new AWS.S3();
 
 exports.handler = async (event, context, callback) => {
-  const Bucket = event.Records[0].s3.bucket.name; // react-kcaster-s3
-  const Key = decodeURIComponent(event.Records[0].s3.object.key);
+  const Bucket = event.Records[0].s3.bucket.name;
+  const Key = decodeURIComponent(event.Records[0].s3.object.key); // original/12312312_abc.png
   console.log(Bucket, Key);
   const filename = Key.split('/')[Key.split('/').length - 1];
   const ext = Key.split('.')[Key.split('.').length - 1].toLowerCase();
@@ -15,7 +15,7 @@ exports.handler = async (event, context, callback) => {
   try {
     const s3Object = await s3.getObject({ Bucket, Key }).promise();
     console.log('original', s3Object.Body.length);
-    const resizedImage = await sharp(s3Object.body)
+    const resizedImage = await sharp(s3Object.Body)
       .resize(400, 400, { fit: 'inside' })
       .toFormat(requiredFormat)
       .toBuffer();
@@ -30,6 +30,6 @@ exports.handler = async (event, context, callback) => {
     return callback(null, `thumb/${filename}`);
   } catch (error) {
     console.error(error);
-    return callback(error); // 람다가 끝날 때는 콜백 사용해서 끝낸다
+    return callback(error);
   }
 };
