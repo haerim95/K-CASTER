@@ -22,7 +22,7 @@ exports.handler = async (event, context, callback) => {
     await s3
       .putObject({
         Bucket,
-        key: `thumb/${filename}`,
+        Key: `thumb/${filename}`,
         Body: resizedImage,
       })
       .promise();
