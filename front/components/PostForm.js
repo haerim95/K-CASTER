@@ -31,13 +31,6 @@ const PostForm = () => {
     }
   }, [addPostDone]);
 
-  const onLocationSelect = useCallback(
-    e => {
-      setLocationForm(e.target.value);
-    },
-    [locationForm]
-  );
-
   const onSubmit = useCallback(() => {
     if (locationForm === '') {
       return alert('지역을 선택해주세요');
@@ -57,6 +50,13 @@ const PostForm = () => {
       data: formData
     });
   }, [text, imagePaths]);
+
+  const onLocationSelect = useCallback(
+    e => {
+      setLocationForm(e.target.value);
+    },
+    [locationForm]
+  );
 
   const onClickImageUpload = useCallback(() => {
     imageInput.current.click();
