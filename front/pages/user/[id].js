@@ -64,11 +64,8 @@ const User = () => {
             property='og:description'
             content={`${userInfo.nickname}님의 게시글`}
           />
-          <meta
-            property='og:image'
-            content='https://nodebird.com/favicon.ico'
-          />
-          <meta property='og:url' content={`https://nodebird.com/user/${id}`} />
+          <meta property='og:image' content='https://kcaster.com/favicon.ico' />
+          <meta property='og:url' content={`https://kcaster.com/user/${id}`} />
         </Head>
       )}
       {userInfo ? (
