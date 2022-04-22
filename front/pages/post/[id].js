@@ -28,7 +28,7 @@ const Post = () => {
           content={
             singlePost.Images[0]
               ? singlePost.Images[0].src
-              : 'http://c.com/favicon.ico'
+              : 'http://kcaster.com/favicon.ico'
           }
         />
         <meta property='og:url' content={`https://kcaster.com/post/${id}`} />
