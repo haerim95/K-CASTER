@@ -31,7 +31,7 @@ const Post = () => {
               : 'http://kcaster.com/favicon.ico'
           }
         />
-        <meta property='og:url' content={`https://kcaster.com/post/${id}`} />
+        <meta property='og:url' content={`http://kcaster.com/post/${id}`} />
       </Head>
       <PostCard post={singlePost} />
     </AppLayout>
