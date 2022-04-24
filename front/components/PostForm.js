@@ -32,7 +32,7 @@ const PostForm = () => {
   }, [addPostDone]);
 
   const onSubmit = useCallback(() => {
-    if (locationForm === '') {
+    if (!locationForm) {
       return alert('지역을 선택해주세요');
     }
     if (!text || !text.trim()) {
