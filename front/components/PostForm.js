@@ -22,24 +22,24 @@ const PostForm = () => {
   const dispatch = useDispatch();
   const imageInput = useRef();
   const [text, onChangeText, setText] = useInput('');
-  const [locationForm, setLocationForm] = useState('');
+  const [location, setLocation] = useState('');
 
   useEffect(() => {
     if (addPostDone) {
       setText('');
-      setLocationForm('');
+      setLocation('');
     }
   }, [addPostDone]);
 
   const onLocationSelect = useCallback(
     e => {
-      setLocationForm(e.target.value);
+      setLocation(e.target.value);
     },
-    [locationForm]
+    [location]
   );
 
   const onSubmit = useCallback(() => {
-    if (!locationForm) {
+    if (!location) {
       return alert('지역을 선택해주세요');
     }
     if (!text || !text.trim()) {
@@ -51,12 +51,12 @@ const PostForm = () => {
       formData.append('image', p);
     });
     formData.append('content', text);
-    formData.append('location', locationForm);
+    formData.append('location', location);
     return dispatch({
       type: ADD_POST_REQUEST,
       data: formData
     });
-  }, [text, imagePaths]);
+  }, [text, imagePaths, location]);
 
   const onClickImageUpload = useCallback(() => {
     imageInput.current.click();
@@ -129,7 +129,7 @@ const PostForm = () => {
       <LocationWrapper>
         <p>어느 지역에서 작성중인가요?</p>
         <WeatherButton
-          location={locationForm}
+          location={location}
           onLocationSelect={onLocationSelect}
         />
       </LocationWrapper>
