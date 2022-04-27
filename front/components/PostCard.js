@@ -108,7 +108,14 @@ const PostCard = ({ post }) => {
         // style={cardStyle}
         cover={post.Images[0] && <PostImages images={post.Images} />}
         actions={[
-          <RetweetOutlined key='retweet' onClick={onRetweet} />,
+          <Popconfirm
+            title='리트윗하시겠습니까？'
+            okText='리트윗'
+            cancelText='취소'
+            onConfirm={onRetweet}
+          >
+            <RetweetOutlined key='retweet' onClick={onRetweet} />
+          </Popconfirm>,
           liked ? (
             <HeartTwoTone
               twoToneColor='#eb2f96'
